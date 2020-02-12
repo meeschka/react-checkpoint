@@ -1,0 +1,13 @@
+.sidepane {
+    height: 100%;
+    width: 300px;
+    background-color: rgb(243, 253, 241);
+    color: #001806;
+}
+.sidepane h3 {
+    padding: 1em;
+}
+.sidepane h3:hover{
+    background-color: #fff;
+    border: 2px solid #001806;
+}
