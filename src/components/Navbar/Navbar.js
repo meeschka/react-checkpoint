@@ -2,7 +2,7 @@ import React from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
 
 const NavBar = () => (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="primary" variant='dark' expand="lg">
         <Navbar.Brand href="#home"><img src="checkpoint-sm.svg"/> Checkpoint</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
