@@ -1,0 +1,32 @@
+.auth-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+.smaller-auth-form-container {
+    width: 90%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.smaller-auth-form-container h2{
+    color: #001806;
+    margin-bottom: 1.5em;
+}
+.form-horizontal {
+    width: 100%;
+}
+.auth-form-btns {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.auth-form-btns .btn {
+    width: 35%;
+    margin-top: 1em;
+    color: white;
+}

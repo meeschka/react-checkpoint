@@ -15,7 +15,7 @@ const NavBar = (props) => {
 
     return (
     <Navbar bg="primary" variant='dark' expand="lg">
-        <Navbar.Brand href="#home"><img src="checkpoint-sm.svg"/> Checkpoint</Navbar.Brand>
+        <Navbar.Brand href="/"><img src="checkpoint-sm.svg"/> Checkpoint</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             {nav}
