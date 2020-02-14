@@ -15,6 +15,23 @@ async function signup(req, res) {
     }
 }
 
+async function login(req, res) {
+    try {
+        const user = await User.findOne({email: req.body.email})
+        if (!user) return escape.status(401).json({err: 'Invalid credentials'})
+        user.comparePassword(req.body.pw, (err, isMatch) => {
+            if (isMatch) {
+                const token = createJWT(user)
+                res.json({token})
+            } else {
+                return res.status(401).json({err: 'Invalid credentials'})
+            }
+        })
+    } catch (err) {
+        return res.status(401).json(err)
+    }
+}
+
 //helper functions
 function createJWT(user) {
     return jwt.sign(
@@ -26,5 +43,6 @@ function createJWT(user) {
 
 
 module.exports = {
-    signup
+    signup,
+    login
 }

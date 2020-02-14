@@ -5,7 +5,7 @@ const NavBar = (props) => {
     let nav = props.user ? 
         <Nav className="ml-auto">
             <Nav.Link href="#link">Add Daily Progress</Nav.Link>
-            <Nav.Link href="/logout">Logout</Nav.Link>
+            <Nav.Link href="" onClick={ props.handleLogout }>Logout</Nav.Link>
         </Nav>
         :
         <Nav className="ml-auto">
