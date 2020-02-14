@@ -30,14 +30,14 @@ const userSchema = new Schema({
 userSchema.set('toJSON', {
     transform: function(doc, ret) {
         //remove the password property when serializing user
-        delete ret.password
-        return ret
+        delete ret.password;
+        return ret;
     }
 })
 
 userSchema.pre('save', function(next) {
     const user = this
-    if (!user.isModified('password')) return next()
+    if (!user.isModified('password')) return next();
     bcrypt.hash(user.password, SALT_ROUNDS, function(err, hash){
         if (err) return next(err)
         user.password = hash
@@ -45,4 +45,4 @@ userSchema.pre('save', function(next) {
     })
 })
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema)
