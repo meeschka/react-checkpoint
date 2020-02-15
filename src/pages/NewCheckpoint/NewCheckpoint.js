@@ -21,7 +21,9 @@ class NewCheckpoint extends Component {
               categories: [{
                   categoryName: '',
                   positives: '',
-                  negatives: ''
+                  negatives: '',
+                  challenges: [],
+                  goals: []
               }]
           },
         }
@@ -33,6 +35,11 @@ class NewCheckpoint extends Component {
         if (["form-control category-name", "form-control positives", "form-control negatives"].includes(e.target.className)) {
             let keyName = e.target.className.slice(13)
             formData.categories[e.target.dataset.id][keyName] = e.target.value
+            this.setState({ formData })
+        } else if (["form-control goal", "form-control plan", "form-control motivation"].includes(e.target.className)) {
+            let keyName = e.target.className.slice(13)
+            let id = e.target.dataset.id.split(',')
+            formData.categories[id[0]].goals[id[1]][keyName] = e.target.value
             this.setState({ formData })
         } else {
             formData[e.target.name] = e.target.value
@@ -52,6 +59,26 @@ class NewCheckpoint extends Component {
         }
         let formData = JSON.parse(JSON.stringify(this.state.formData))
         formData.categories.push(newCategory)
+        this.setState({ formData })
+    }
+
+    addGoal = (num) => {
+        let formData = JSON.parse(JSON.stringify(this.state.formData))
+        formData.categories[num].goals.push({
+            goal: '',
+            plan: '',
+            motivation: ''
+        })
+        this.setState({ formData })
+    }
+
+    addChallenge = (num) => {
+        let formData = JSON.parse(JSON.stringify(this.state.formData))
+        formData.categories[num].challenges.push({
+            challenge: '',
+            number: '',
+            results: []
+        })
         this.setState({ formData })
     }
 
@@ -102,7 +129,11 @@ class NewCheckpoint extends Component {
                         </div>
                         <h4>Checkpoint Categories</h4>
                         <p>Try breaking goals up into different sections of your life: social, health, finance, etc.</p>
-                       <NewCategoryForm categories={this.state.formData.categories}/>
+                       <NewCategoryForm
+                            categories={this.state.formData.categories}
+                            addChallenge={this.addChallenge}
+                            addGoal={this.addGoal}
+                        />
                        <div className="form-group">
                             <button onClick={this.addCategory}>Add a Category</button>
                         </div>

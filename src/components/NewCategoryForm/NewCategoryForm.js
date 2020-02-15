@@ -1,8 +1,11 @@
 import React from 'react'
 
+import NewGoalForm from '../NewGoalForm/NewGoalForm'
+import NewChallengeForm from '../NewChallengeForm/NewChallengeForm'
+
 const NewCategoryForm = (props) => {
     return (
-        props.categories.map((val, idx) => {
+        props.categories.map((category, idx) => {
             let catId = `cat-${idx}`, posId = `pos-${idx}`, negId = `neg-${idx}`
             return (
                 <div key={catId} className="single-cateogry">
@@ -42,6 +45,24 @@ const NewCategoryForm = (props) => {
                             name={negId}
                             value={props.categories[idx].negatives}></input>
                     </div>
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
+                            <button onClick={() => props.addGoal(idx)}>Add a Goal</button>
+                            <p>Think of how you can improve on the positives you identified or change what isn't working for you!</p>
+                        </div>
+                        <div className="form-group col-md-6">
+                            <button onClick={() => props.addChallenge(idx)}>Add A Challenge</button>
+                            <p>Challenge yourself to complete a task a certain number of times during this checkpoint.</p>
+                        </div>
+                    </div>
+                    {category.goals.map((goal, num) => (
+                        <NewGoalForm 
+                            categoryIdx={idx}
+                            goalIdx={num}
+                            goal={props.categories[idx].goals[num]}
+                        />
+                    ))}
+
                 </div>
             )
         })
