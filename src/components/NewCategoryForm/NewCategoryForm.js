@@ -1,7 +1,7 @@
 import React from 'react'
 
 import NewGoalForm from '../NewGoalForm/NewGoalForm'
-import NewChallengeForm from '../NewChallengeForm/NewChallengeForm'
+import NewChallengeForm from '../NewChallengeForm/NewChallengeForm.js'
 
 const NewCategoryForm = (props) => {
     return (
@@ -49,17 +49,26 @@ const NewCategoryForm = (props) => {
                         <div className="form-group col-md-6">
                             <button onClick={() => props.addGoal(idx)}>Add a Goal</button>
                             <p>Think of how you can improve on the positives you identified or change what isn't working for you!</p>
-                        </div>
                         <div className="form-group col-md-6">
                             <button onClick={() => props.addChallenge(idx)}>Add A Challenge</button>
                             <p>Challenge yourself to complete a task a certain number of times during this checkpoint.</p>
                         </div>
                     </div>
+                    </div>
+                    {category.goals.length > 0 ? <h3>Goals</h3> : ''}
                     {category.goals.map((goal, num) => (
                         <NewGoalForm 
                             categoryIdx={idx}
                             goalIdx={num}
-                            goal={props.categories[idx].goals[num]}
+                            goal={goal}
+                        />
+                    ))}
+                    {category.challenges.length > 0 ? <h3>Challenges</h3> : ''}
+                    {category.challenges.map((challenge, num) => (
+                        <NewChallengeForm 
+                            categoryIdx={idx}
+                            challengeIdx={num}
+                            challenge={challenge}
                         />
                     ))}
 

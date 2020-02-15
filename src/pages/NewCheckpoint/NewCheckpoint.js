@@ -35,16 +35,18 @@ class NewCheckpoint extends Component {
         if (["form-control category-name", "form-control positives", "form-control negatives"].includes(e.target.className)) {
             let keyName = e.target.className.slice(13)
             formData.categories[e.target.dataset.id][keyName] = e.target.value
-            this.setState({ formData })
         } else if (["form-control goal", "form-control plan", "form-control motivation"].includes(e.target.className)) {
             let keyName = e.target.className.slice(13)
             let id = e.target.dataset.id.split(',')
             formData.categories[id[0]].goals[id[1]][keyName] = e.target.value
-            this.setState({ formData })
+        } else if (["form-control challenge", "form-control num"].includes(e.target.className)) {
+            let keyName = e.target.className.slice(13)
+            let id = e.target.dataset.id.split(',')
+            formData.categories[id[0]].challenges[id[1]][keyName] = e.target.value
         } else {
             formData[e.target.name] = e.target.value
-            this.setState({ formData })
         } 
+        this.setState({ formData })
     }
     handleSubmit = async (e) => {
         e.preventDefault()
@@ -76,7 +78,7 @@ class NewCheckpoint extends Component {
         let formData = JSON.parse(JSON.stringify(this.state.formData))
         formData.categories[num].challenges.push({
             challenge: '',
-            number: '',
+            num: '',
             results: []
         })
         this.setState({ formData })
