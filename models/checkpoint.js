@@ -28,7 +28,7 @@ const checkpointSchema = new Schema({
 })
 
 const categorySchema = new Schema({
-    name: {
+    categoryName: {
         type: String,
         required: true
     },

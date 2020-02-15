@@ -5,7 +5,7 @@
 .checkpoint-container {
     display: flex;
     flex-direction: column;
-    padding-top: 2em;
+    padding-top: 3em;
     align-items: center;
     width: 100%
 }

@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
 import Sidepane from '../../components/Sidepane/Sidepane'
+import NewCategoryForm from '../../components/NewCategoryForm/NewCategoryForm'
 
 import './NewCheckpoint.css'
 
@@ -12,24 +15,40 @@ class NewCheckpoint extends Component {
               name: '',
               startDate: '',
               endDate: '',
+              theme: '',
               reminders: '',
               reminderType: 'None',
-              categories: []
+              categories: [{
+                  categoryName: '',
+                  positives: '',
+                  negatives: ''
+              }]
           }
         }
     }
     handleChange = (e) => {
     //   this.props.updateMessage('')
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        let categories = [...this.state.formData.categories]
+        let formData = {...this.state.formData, categories: categories}
+        if (["form-control category-name", "form-control positives", "form-control negatives"].includes(e.target.className)) {
+            let keyName = e.target.className.slice(13)
+            categories[e.target.dataset.id][keyName] = e.target.value
+            formData.categories = categories
+            this.setState({ formData })
+        } else {
+            formData[e.target.name] = e.target.value
+            this.setState({ formData })
+        } 
     }
     handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(e)
+        console.log(e.formData)
     //post to databse
     }
 
+    isFormInvalid = () => {
+        return false;
+    }
     //only allow logged in users to access form, submit form, etc.
 
     render() {
@@ -38,36 +57,52 @@ class NewCheckpoint extends Component {
                 <Sidepane />
                 <div className="checkpoint-container">
                     <h1>New Checkpoint</h1>
-                    <form className="checkpoint-form" onSubmit={this.handleSubmit} >
+                    <form className="checkpoint-form" onSubmit={this.handleSubmit} onChange={this.handleChange} >
                         <div className="form-group">
-                            <label for="checkpointName">Checkpoint Name</label>
-                            <input type="text" class="form-control" id="checkpointNameInput" aria-describedby="checkpointName" placeholder="Enter Checkpoint Name" name="name"></input>
+                            <label htmlFor="name">Checkpoint Name</label>
+                            <input type="text" className="form-control" id="checkpointNameInput" aria-describedby="checkpointName" placeholder="Enter Checkpoint Name" name="name"></input>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label for="checkpointStartDate">Start Date</label>
-                                <input type="date" class="form-control" id="startDateInput" aria-describedby="checkpointStartDate" name="startDate"></input>
-                                <small id="dateHelp" class="form-text text-muted">We recommend 2 - 3 months.</small>
+                                <label htmlFor="checkpointStartDate">Start Date</label>
+                                <input type="date" className="form-control" id="startDateInput" aria-describedby="checkpointStartDate" name="startDate"></input>
+                                <small id="dateHelp" className="form-text text-muted">We recommend 2 - 3 months.</small>
                             </div>
                             <div className="form-group col-md-6">
-                                <label for="checkpointEndDate">End Date</label>
-                                <input type="date" class="form-control" id="endDateInput" aria-describedby="checkpointEndDate" name="endDate"></input>
+                                <label htmlFor="checkpointEndDate">End Date</label>
+                                <input type="date" className="form-control" id="endDateInput" aria-describedby="checkpointEndDate" name="endDate"></input>
                             </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="theme">Checkpoint Theme</label>
+                            <input type="text" className="form-control" id="checkpointThemeInput" aria-describedby="checkpointTheme" placeholder="Enter Checkpoint Theme" name="theme"></input>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label for="reminderType">Reminders</label>
-                                <select class="form-control" id="reminderTypeInput" name="reminderType">
+                                <label htmlFor="reminderType">Reminders</label>
+                                <select className="form-control" id="reminderTypeInput" name="reminderType">
                                     <option>None</option>
                                     <option>Email</option>
                                     <option>Text</option>
                                 </select>
                             </div>
                             <div className="form-group col-md-6">
-                                <label for="reminderFrequencyInput">Reminder Frequency (days)</label>
-                                <input type="text" class="form-control" id="reminderInput" aria-describedby="reminderFrequencyInput" name='reminders'></input>
+                                <label htmlFor="reminderFrequencyInput">Reminder Frequency (days)</label>
+                                <input type="text" className="form-control" id="reminderInput" aria-describedby="reminderFrequencyInput" name='reminders'></input>
                             </div>
                         </div>
+                        <h4>Checkpoint Categories</h4>
+                        <p>Try breaking goals up into different sections of your life: social, health, finance, etc.</p>
+                       <NewCategoryForm categories={this.state.formData.categories}/>
+                       <div className="form-group">
+                            <button>Add a Category</button>
+                        </div>
+                       <div className="form-group">
+                            <div className="checkpoint-form-btns">
+                                <button className="btn btn-primary" disabled={this.isFormInvalid()}>Submit</button>
+                                <Link to='/' className="btn btn-dark">Cancel</Link>
+                            </div>
+                        </div> 
                     </form>
                 </div>
             </div>
