@@ -23,17 +23,16 @@ class NewCheckpoint extends Component {
                   positives: '',
                   negatives: ''
               }]
-          }
+          },
         }
     }
     handleChange = (e) => {
     //   this.props.updateMessage('')
-        let categories = [...this.state.formData.categories]
-        let formData = {...this.state.formData, categories: categories}
+        // let categories = [...this.state.formData.categories]
+        let formData = JSON.parse(JSON.stringify(this.state.formData))
         if (["form-control category-name", "form-control positives", "form-control negatives"].includes(e.target.className)) {
             let keyName = e.target.className.slice(13)
-            categories[e.target.dataset.id][keyName] = e.target.value
-            formData.categories = categories
+            formData.categories[e.target.dataset.id][keyName] = e.target.value
             this.setState({ formData })
         } else {
             formData[e.target.name] = e.target.value
@@ -42,8 +41,18 @@ class NewCheckpoint extends Component {
     }
     handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(e.formData)
     //post to databse
+    }
+
+    addCategory = (e) => {
+        let newCategory = {
+            categoryName: '',
+            positives: '',
+            negatives: ''
+        }
+        let formData = JSON.parse(JSON.stringify(this.state.formData))
+        formData.categories.push(newCategory)
+        this.setState({ formData })
     }
 
     isFormInvalid = () => {
@@ -95,7 +104,7 @@ class NewCheckpoint extends Component {
                         <p>Try breaking goals up into different sections of your life: social, health, finance, etc.</p>
                        <NewCategoryForm categories={this.state.formData.categories}/>
                        <div className="form-group">
-                            <button>Add a Category</button>
+                            <button onClick={this.addCategory}>Add a Category</button>
                         </div>
                        <div className="form-group">
                             <div className="checkpoint-form-btns">

@@ -36,6 +36,7 @@ const NewCategoryForm = (props) => {
                             type="text"
                             className="form-control negatives"
                             id={negId}
+                            data-id={idx}
                             aria-describedby="categoryNegatives"
                             placeholder="What's not working for you in this category?"
                             name={negId}
