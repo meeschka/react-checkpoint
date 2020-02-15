@@ -1,0 +1,16 @@
+.new-checkpoint-page {
+    display: flex;
+    height: 100%;
+}
+.checkpoint-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2em;
+    align-items: center;
+    width: 100%
+}
+.checkpoint-form {
+    margin-top: 2em;
+    width: 95%;
+    max-width: 950px;
+}

@@ -4,6 +4,7 @@ import { Navbar, Nav } from 'react-bootstrap'
 const NavBar = (props) => {
     let nav = props.user ? 
         <Nav className="ml-auto">
+            <Nav.Link href="/new">Add New Checkpoint</Nav.Link>
             <Nav.Link href="#link">Add Daily Progress</Nav.Link>
             <Nav.Link href="" onClick={ props.handleLogout }>Logout</Nav.Link>
         </Nav>

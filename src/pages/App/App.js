@@ -10,6 +10,7 @@ import LoginPage from '../LoginPage/LoginPage'
 
 import NavBar from '../../components/Navbar/Navbar'
 import Sidepane from '../../components/Sidepane/Sidepane'
+import NewCheckpoint from '../NewCheckpoint/NewCheckpoint';
 
 
 class App extends Component {
@@ -47,6 +48,11 @@ class App extends Component {
           history={history}
           handleSignupOrLogin={this.handleSignupOrLogin}
         />} />
+        <Route exact path='/new' render={() => <>
+          <NewCheckpoint
+            user={this.state.user}
+          />
+        </>} />
         <Route exact path='/' render={() => (
           <Sidepane />
           )} />
