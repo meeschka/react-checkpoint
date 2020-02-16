@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+import checkpoint from '../../services/checkpoint-api'
+
 import Sidepane from '../../components/Sidepane/Sidepane'
 import NewCategoryForm from '../../components/NewCategoryForm/NewCategoryForm'
 
 import './NewCheckpoint.css'
 
 class NewCheckpoint extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state={
           invalidForm: true,
+          isLoading: false,
           formData: {
               name: '',
               startDate: '',
@@ -24,13 +27,13 @@ class NewCheckpoint extends Component {
                   negatives: '',
                   challenges: [],
                   goals: []
-              }]
+              }],
+              user:this.props.user._id,
           },
         }
     }
     handleChange = (e) => {
     //   this.props.updateMessage('')
-        // let categories = [...this.state.formData.categories]
         let formData = JSON.parse(JSON.stringify(this.state.formData))
         if (["form-control category-name", "form-control positives", "form-control negatives"].includes(e.target.className)) {
             let keyName = e.target.className.slice(13)
@@ -48,8 +51,13 @@ class NewCheckpoint extends Component {
         } 
         this.setState({ formData })
     }
+    
     handleSubmit = async (e) => {
         e.preventDefault()
+        this.setState({isLoading: true})
+        await checkpoint.create(this.state.formData)
+        this.setState({isLoading: false})
+        // if res is okay this.props.history.push('/')
     //post to databse
     }
 
@@ -98,27 +106,59 @@ class NewCheckpoint extends Component {
                     <form className="checkpoint-form" onSubmit={this.handleSubmit} onChange={this.handleChange} >
                         <div className="form-group">
                             <label htmlFor="name">Checkpoint Name</label>
-                            <input type="text" className="form-control" id="checkpointNameInput" aria-describedby="checkpointName" placeholder="Enter Checkpoint Name" name="name"></input>
+                            <input
+                                type="text"
+                                required
+                                className="form-control"
+                                id="checkpointNameInput"
+                                aria-describedby="checkpointName"
+                                placeholder="Enter Checkpoint Name"
+                                name="name"
+                            ></input>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="checkpointStartDate">Start Date</label>
-                                <input type="date" className="form-control" id="startDateInput" aria-describedby="checkpointStartDate" name="startDate"></input>
+                                <input
+                                    type="date"
+                                    required
+                                    className="form-control"
+                                    id="startDateInput"
+                                    aria-describedby="checkpointStartDate"
+                                    name="startDate"
+                                ></input>
                                 <small id="dateHelp" className="form-text text-muted">We recommend 2 - 3 months.</small>
                             </div>
                             <div className="form-group col-md-6">
                                 <label htmlFor="checkpointEndDate">End Date</label>
-                                <input type="date" className="form-control" id="endDateInput" aria-describedby="checkpointEndDate" name="endDate"></input>
+                                <input 
+                                    type="date"
+                                    required
+                                    className="form-control"
+                                    id="endDateInput"
+                                    aria-describedby="checkpointEndDate"
+                                    name="endDate"
+                                ></input>
                             </div>
                         </div>
                         <div className="form-group">
                             <label htmlFor="theme">Checkpoint Theme</label>
-                            <input type="text" className="form-control" id="checkpointThemeInput" aria-describedby="checkpointTheme" placeholder="Enter Checkpoint Theme" name="theme"></input>
+                            <input 
+                                type="text"
+                                className="form-control"
+                                id="checkpointThemeInput"
+                                aria-describedby="checkpointTheme"
+                                placeholder="Enter Checkpoint Theme"
+                                name="theme"
+                            ></input>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="reminderType">Reminders</label>
-                                <select className="form-control" id="reminderTypeInput" name="reminderType">
+                                <select
+                                    className="form-control"
+                                    id="reminderTypeInput"
+                                    name="reminderType">
                                     <option>None</option>
                                     <option>Email</option>
                                     <option>Text</option>
@@ -126,7 +166,13 @@ class NewCheckpoint extends Component {
                             </div>
                             <div className="form-group col-md-6">
                                 <label htmlFor="reminderFrequencyInput">Reminder Frequency (days)</label>
-                                <input type="text" className="form-control" id="reminderInput" aria-describedby="reminderFrequencyInput" name='reminders'></input>
+                                <input 
+                                    type="text"
+                                    className="form-control"
+                                    id="reminderInput"
+                                    aria-describedby="reminderFrequencyInput"
+                                    name='reminders'
+                                ></input>
                             </div>
                         </div>
                         <h4>Checkpoint Categories</h4>

@@ -9,6 +9,7 @@ const NewGoalForm = (props) => {
                 <label htmlFor={`goal-${idStr}`}>Goal</label>
                 <input 
                     type="text"
+                    required
                     className="form-control goal"
                     id={`goal-${idStr}`}
                     data-id={id}

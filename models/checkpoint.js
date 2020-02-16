@@ -1,42 +1,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const checkpointSchema = new Schema({
-    name: {
+const resultSchema = new Schema({
+    result: {
         type: String,
         required: true
     },
-    startDate: {
-        type: Date,
-        required: true
-    },
-    endDate: {
-        type: Date,
-        required: true
-    },
-    theme: String,
-    reminders: {
-        type: Number,
-        default: -1,
-    },
-    reminderType: String,
-    nextReminder: Date,
-    user: [{type: Schema.Types.ObjectId, ref: 'User'}],
-    categories: [categorySchema]
-}, {
-    timestamps: true
-})
-
-const categorySchema = new Schema({
-    categoryName: {
-        type: String,
-        required: true
-    },
-    positives: String,
-    negatives: String,
-    goals: [goalSchema],
-    scores: [scoreSchema],
-    challenges: [challengeSchema]
+    date: Date,
+    note: String
 })
 
 const goalSchema = new Schema({
@@ -70,13 +41,41 @@ const challengeSchema = new Schema({
     results: [resultSchema]
 })
 
-const resultSchema = new Schema({
-    result: {
+const categorySchema = new Schema({
+    categoryName: {
         type: String,
         required: true
     },
-    date: Date,
-    note: String
+    positives: String,
+    negatives: String,
+    goals: [goalSchema],
+    scores: [scoreSchema],
+    challenges: [challengeSchema]
 })
 
+const checkpointSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    startDate: {
+        type: Date,
+        required: true
+    },
+    endDate: {
+        type: Date,
+        required: true
+    },
+    theme: String,
+    reminders: {
+        type: Number,
+        default: -1,
+    },
+    reminderType: String,
+    nextReminder: Date,
+    user: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    categories: [categorySchema]
+}, {
+    timestamps: true
+})
 module.exports = mongoose.model('Checkpoint', checkpointSchema)

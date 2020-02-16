@@ -31,7 +31,6 @@ class App extends Component {
     this.setState({ user: null })
   }
 
-
   render() {
     return (
       <div className='page'>
@@ -48,10 +47,10 @@ class App extends Component {
           history={history}
           handleSignupOrLogin={this.handleSignupOrLogin}
         />} />
-        <Route exact path='/new' render={() => <>
-          <NewCheckpoint
-            user={this.state.user}
-          />
+        <Route exact path='/new' render={({history}) => <><NewCheckpoint
+          history={history} 
+          user={this.state.user}
+        />
         </>} />
         <Route exact path='/' render={() => (
           <Sidepane />

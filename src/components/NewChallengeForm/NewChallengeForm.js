@@ -9,6 +9,7 @@ const NewChallengeForm = (props) => {
                 <label htmlFor={`challenge-${idStr}`}>Challenge</label>
                 <input 
                     type="text"
+                    required
                     className="form-control challenge"
                     id={`challenge-${idStr}`}
                     data-id={id}
@@ -22,6 +23,7 @@ const NewChallengeForm = (props) => {
                 <label htmlFor={`num-${idStr}`}>Quantity</label>
                 <input 
                     type="text"
+                    required
                     className="form-control num"
                     id={`num-${idStr}`}
                     data-id={id}

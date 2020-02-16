@@ -8,11 +8,12 @@ const NewCategoryForm = (props) => {
         props.categories.map((category, idx) => {
             let catId = `cat-${idx}`, posId = `pos-${idx}`, negId = `neg-${idx}`
             return (
-                <div key={catId} className="single-cateogry">
+                <div key={catId} className="single-category">
                     <div className="form-group">
                         <label htmlFor={catId}>Category Name</label>
                         <input
                             type="text"
+                            required
                             className="form-control categoryName"
                             id={catId}
                             data-id={idx}
