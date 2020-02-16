@@ -102,7 +102,7 @@ class NewCheckpoint extends Component {
     render() {
         return (
             <div className="new-checkpoint-page">
-                <Sidepane />
+                <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.selectCheckpoint} />
                 <div className="checkpoint-container">
                     <h1>New Checkpoint</h1>
                     <form className="checkpoint-form" onSubmit={this.handleSubmit} onChange={this.handleChange} >

@@ -13,14 +13,19 @@ import NavBar from '../../components/Navbar/Navbar'
 import Sidepane from '../../components/Sidepane/Sidepane'
 import NewCheckpoint from '../NewCheckpoint/NewCheckpoint';
 
-
 class App extends Component {
   constructor() {
     super();
     this.state={
       user: userService.getUser(),
-      checkpoints: []
+      checkpoints: [],
+      currentCheckpoint: ''
     }
+  }
+
+  //checkpoint methods
+  selectCheckpoint = (e) => {
+    this.setState({currentCheckpoint: e.target.dataset.id})
   }
 
   //Auth methods
@@ -35,8 +40,11 @@ class App extends Component {
 
   //Lifecycle Methods
   async componentDidMount() {
-    const checkpoints = await checkpointAPI.getAll()
-    this.setState({checkpoints})
+    if (this.state.user) {
+      const checkpoints = await checkpointAPI.getAll()
+      this.setState({checkpoints})
+      if (checkpoints.length > 0 && !this.state.currentCheckpoint) {this.setState({currentCheckpoint: 0})}
+    }
   }
 
   render() {
@@ -58,10 +66,14 @@ class App extends Component {
         <Route exact path='/new' render={({history}) => <><NewCheckpoint
           history={history} 
           user={this.state.user}
+          checkpoints={this.state.checkpoints}
+          selectCheckpoint={this.selectCheckpoint}
         />
         </>} />
         <Route exact path='/' render={() => (
-          <Sidepane />
+          <Sidepane
+            checkpoints={this.state.checkpoints}
+            selectCheckpoint={this.selectCheckpoint} />
           )} />
       </Switch>
       </div>
