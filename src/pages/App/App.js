@@ -4,6 +4,7 @@ import logo from '../../checkpoint.svg';
 import './App.css';
 
 import userService from '../../utils/userService'
+import checkpointAPI from '../../services/checkpoint-api'
 
 import SignupPage from '../SignupPage/SignupPage'
 import LoginPage from '../LoginPage/LoginPage'
@@ -17,7 +18,8 @@ class App extends Component {
   constructor() {
     super();
     this.state={
-      user: userService.getUser()
+      user: userService.getUser(),
+      checkpoints: []
     }
   }
 
@@ -29,6 +31,12 @@ class App extends Component {
   handleLogout = () => {
     userService.logout()
     this.setState({ user: null })
+  }
+
+  //Lifecycle Methods
+  async componentDidMount() {
+    const checkpoints = await checkpointAPI.getAll()
+    this.setState({checkpoints})
   }
 
   render() {

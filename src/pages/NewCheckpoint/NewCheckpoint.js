@@ -28,14 +28,15 @@ class NewCheckpoint extends Component {
                   challenges: [],
                   goals: []
               }],
-              user:this.props.user._id,
+              user:[this.props.user._id],
           },
         }
     }
     handleChange = (e) => {
     //   this.props.updateMessage('')
         let formData = JSON.parse(JSON.stringify(this.state.formData))
-        if (["form-control category-name", "form-control positives", "form-control negatives"].includes(e.target.className)) {
+        console.log(formData)
+        if (["form-control categoryName", "form-control positives", "form-control negatives"].includes(e.target.className)) {
             let keyName = e.target.className.slice(13)
             formData.categories[e.target.dataset.id][keyName] = e.target.value
         } else if (["form-control goal", "form-control plan", "form-control motivation"].includes(e.target.className)) {
@@ -50,6 +51,7 @@ class NewCheckpoint extends Component {
             formData[e.target.name] = e.target.value
         } 
         this.setState({ formData })
+        // console.log(this.state.formData)
     }
     
     handleSubmit = async (e) => {

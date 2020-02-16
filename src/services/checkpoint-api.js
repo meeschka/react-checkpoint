@@ -13,12 +13,24 @@ function create(checkpoint) {
     })
     .then(res => {
         if (res.ok) return res.json();
-        console.log(res)
-        console.log(res.err)
         throw new Error('New checkpoint could not be added.')
     })
 }
 
+function getAll(userId) {
+    return fetch(BASE_URL, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer '+ tokenService.getToken()
+        }
+    })
+    .then(res => {
+        if (res.ok) return res.json()
+        throw new Error('Database Error')
+    })
+}
+
 export default {
-    create
+    create,
+    getAll
 }
