@@ -4,7 +4,8 @@ const NewChallengeForm = (props) => {
     let id = [props.categoryIdx, props.challengeIdx]
     let idStr = `${props.categoryIdx}-${props.challengeIdx}`
     return (
-        <div className="challenge-form" key={`goal-${props.categoryIdx}-${props.goalIdx}`}>
+        <div className="challenge-form" key={`goal-${props.categoryIdx}-${props.challengeIdx}`}>
+            <h5>{`Challenge ${props.challengeIdx+1}`}</h5>
             <div className="form-group">
                 <label htmlFor={`challenge-${idStr}`}>Challenge</label>
                 <input 

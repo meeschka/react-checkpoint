@@ -1,6 +1,7 @@
 .sidepane {
     width: 300px;
-    background-color: rgb(243, 253, 241);
+    /* background-color: rgb(243, 253, 241); */
+    background-color: #D6E9D5;
     color: #001806;
 }
 .sidepane h3 {

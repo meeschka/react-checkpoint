@@ -67,7 +67,9 @@ class NewCheckpoint extends Component {
         let newCategory = {
             categoryName: '',
             positives: '',
-            negatives: ''
+            negatives: '',
+            challenges: [],
+            goals: []
         }
         let formData = JSON.parse(JSON.stringify(this.state.formData))
         formData.categories.push(newCategory)
@@ -106,91 +108,91 @@ class NewCheckpoint extends Component {
                 <div className="checkpoint-container">
                     <h1>New Checkpoint</h1>
                     <form className="checkpoint-form" onSubmit={this.handleSubmit} onChange={this.handleChange} >
-                        <div className="form-group">
-                            <label htmlFor="name">Checkpoint Name</label>
-                            <input
-                                type="text"
-                                required
-                                className="form-control"
-                                id="checkpointNameInput"
-                                aria-describedby="checkpointName"
-                                placeholder="Enter Checkpoint Name"
-                                name="name"
-                            ></input>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-6">
-                                <label htmlFor="checkpointStartDate">Start Date</label>
+                        <div className = 'checkpoint-main-form'>
+                            <div className="form-group">
+                                <label htmlFor="name">Checkpoint Name</label>
                                 <input
-                                    type="date"
+                                    type="text"
                                     required
                                     className="form-control"
-                                    id="startDateInput"
-                                    aria-describedby="checkpointStartDate"
-                                    name="startDate"
-                                ></input>
-                                <small id="dateHelp" className="form-text text-muted">We recommend 2 - 3 months.</small>
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label htmlFor="checkpointEndDate">End Date</label>
-                                <input 
-                                    type="date"
-                                    required
-                                    className="form-control"
-                                    id="endDateInput"
-                                    aria-describedby="checkpointEndDate"
-                                    name="endDate"
+                                    id="checkpointNameInput"
+                                    aria-describedby="checkpointName"
+                                    placeholder="Enter Checkpoint Name"
+                                    name="name"
                                 ></input>
                             </div>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="theme">Checkpoint Theme</label>
-                            <input 
-                                type="text"
-                                className="form-control"
-                                id="checkpointThemeInput"
-                                aria-describedby="checkpointTheme"
-                                placeholder="Enter Checkpoint Theme"
-                                name="theme"
-                            ></input>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-6">
-                                <label htmlFor="reminderType">Reminders</label>
-                                <select
-                                    className="form-control"
-                                    id="reminderTypeInput"
-                                    name="reminderType">
-                                    <option>None</option>
-                                    <option>Email</option>
-                                    <option>Text</option>
-                                </select>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="checkpointStartDate">Start Date</label>
+                                    <input
+                                        type="date"
+                                        required
+                                        className="form-control"
+                                        id="startDateInput"
+                                        aria-describedby="checkpointStartDate"
+                                        name="startDate"
+                                    ></input>
+                                    <small id="dateHelp" className="form-text text-muted">We recommend 2 - 3 months.</small>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="checkpointEndDate">End Date</label>
+                                    <input 
+                                        type="date"
+                                        required
+                                        className="form-control"
+                                        id="endDateInput"
+                                        aria-describedby="checkpointEndDate"
+                                        name="endDate"
+                                    ></input>
+                                </div>
                             </div>
-                            <div className="form-group col-md-6">
-                                <label htmlFor="reminderFrequencyInput">Reminder Frequency (days)</label>
+                            <div className="form-group">
+                                <label htmlFor="theme">Checkpoint Theme</label>
                                 <input 
                                     type="text"
                                     className="form-control"
-                                    id="reminderInput"
-                                    aria-describedby="reminderFrequencyInput"
-                                    name='reminders'
+                                    id="checkpointThemeInput"
+                                    aria-describedby="checkpointTheme"
+                                    placeholder="Enter Checkpoint Theme"
+                                    name="theme"
                                 ></input>
                             </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="reminderType">Reminders</label>
+                                    <select
+                                        className="form-control"
+                                        id="reminderTypeInput"
+                                        name="reminderType">
+                                        <option>None</option>
+                                        <option>Email</option>
+                                        <option>Text</option>
+                                    </select>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="reminderFrequencyInput">Reminder Frequency (days)</label>
+                                    <input 
+                                        type="text"
+                                        className="form-control"
+                                        id="reminderInput"
+                                        aria-describedby="reminderFrequencyInput"
+                                        name='reminders'
+                                    ></input>
+                                </div>
+                            </div>
+                            <h4>Checkpoint Categories</h4>
+                            <p>Try breaking goals up into different sections of your life: social, health, finance, etc.</p>
                         </div>
-                        <h4>Checkpoint Categories</h4>
-                        <p>Try breaking goals up into different sections of your life: social, health, finance, etc.</p>
                        <NewCategoryForm
                             categories={this.state.formData.categories}
                             addChallenge={this.addChallenge}
                             addGoal={this.addGoal}
                         />
                        <div className="form-group">
-                            <button onClick={this.addCategory}>Add a Category</button>
-                        </div>
-                       <div className="form-group">
                             <div className="checkpoint-form-btns">
-                                <button className="btn btn-primary" disabled={this.isFormInvalid()}>Submit</button>
-                                <Link to='/' className="btn btn-dark">Cancel</Link>
+                                <button className="btn btn-primary" onClick={this.addCategory}>Add a Category</button>
+                                <button className="btn btn-success" disabled={this.isFormInvalid()}>Create Checkpoint</button>
+                                <Link to='/' className="btn btn-danger">Cancel</Link>
                             </div>
                         </div> 
                     </form>

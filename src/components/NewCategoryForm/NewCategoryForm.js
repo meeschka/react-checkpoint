@@ -3,12 +3,19 @@ import React from 'react'
 import NewGoalForm from '../NewGoalForm/NewGoalForm'
 import NewChallengeForm from '../NewChallengeForm/NewChallengeForm.js'
 
+import './NewCategoryForm.css'
+
 const NewCategoryForm = (props) => {
     return (
         props.categories.map((category, idx) => {
             let catId = `cat-${idx}`, posId = `pos-${idx}`, negId = `neg-${idx}`
+            let titleText = props.categories[idx].name ? props.categories[idx].name : `Category ${idx+1}`
             return (
-                <div key={catId} className="single-category">
+                <div key={catId} className="single-category-form">
+                    <div class='category-header-form d-flex justify-content-between'>
+                        <h3>{titleText}</h3>
+                        <button className='btn btn-danger'>Remove Category</button>
+                    </div>
                     <div className="form-group">
                         <label htmlFor={catId}>Category Name</label>
                         <input
@@ -46,15 +53,15 @@ const NewCategoryForm = (props) => {
                             name={negId}
                             value={props.categories[idx].negatives}></input>
                     </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
-                            <button onClick={() => props.addGoal(idx)}>Add a Goal</button>
+                    <div className="d-flex mt-4">
+                        <div className="form-group challenge-and-goals-form">
+                            <button className="btn btn-primary" onClick={() => props.addGoal(idx)}>Add a Goal</button>
                             <p>Think of how you can improve on the positives you identified or change what isn't working for you!</p>
-                        <div className="form-group col-md-6">
-                            <button onClick={() => props.addChallenge(idx)}>Add A Challenge</button>
+                        </div>
+                        <div className="form-group challenge-and-goals-form">
+                            <button className="btn btn-primary" onClick={() => props.addChallenge(idx)}>Add A Challenge</button>
                             <p>Challenge yourself to complete a task a certain number of times during this checkpoint.</p>
                         </div>
-                    </div>
                     </div>
                     {category.goals.length > 0 ? <h3>Goals</h3> : ''}
                     {category.goals.map((goal, num) => (

@@ -1,0 +1,20 @@
+.single-category-form {
+    padding: 2em;
+    padding-top: 1em;
+}
+.single-category-form:nth-child(even) {
+    background-color: #D6E9D5;
+    /* background-color: rgb(243, 253, 241); */
+}
+.challenge-and-goals-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 0;
+    align-items: center;
+    text-align: center;
+}
+
+.challenge-and-goals-form .btn {
+    margin-bottom: 10px;;
+}

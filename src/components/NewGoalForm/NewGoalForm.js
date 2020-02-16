@@ -5,6 +5,7 @@ const NewGoalForm = (props) => {
     let idStr = `${props.categoryIdx}-${props.goalIdx}`
     return (
         <div className="challenge-form" key={`goal-${props.categoryIdx}-${props.goalIdx}`}>
+            <h5>{`Goal ${props.goalIdx+1}`}</h5>
             <div className="form-group">
                 <label htmlFor={`goal-${idStr}`}>Goal</label>
                 <input 
