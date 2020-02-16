@@ -1,0 +1,18 @@
+.intro-card {
+    border: 5px solid #005731;
+    border-radius: 14px;
+    width: 45%;
+    min-width: 400px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+.far, .fas {
+    color: #005731;
+    margin: 10px;
+}
+.intro-btn {
+    width: 95%;
+    margin-top: 10px;
+    margin-bottom:20px;
+}

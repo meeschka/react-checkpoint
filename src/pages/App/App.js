@@ -8,9 +8,9 @@ import checkpointAPI from '../../services/checkpoint-api'
 
 import SignupPage from '../SignupPage/SignupPage'
 import LoginPage from '../LoginPage/LoginPage'
+import MainPage from '../MainPage/MainPage'
 
 import NavBar from '../../components/Navbar/Navbar'
-import Sidepane from '../../components/Sidepane/Sidepane'
 import NewCheckpoint from '../NewCheckpoint/NewCheckpoint';
 
 class App extends Component {
@@ -70,10 +70,11 @@ class App extends Component {
           selectCheckpoint={this.selectCheckpoint}
         />
         </>} />
-        <Route exact path='/' render={() => (
-          <Sidepane
-            checkpoints={this.state.checkpoints}
-            selectCheckpoint={this.selectCheckpoint} />
+        <Route exact path='/' render={() => (<MainPage 
+          checkpoints={this.state.checkpoints}
+          selectCheckpoint={this.selectCheckpoint}
+          currentCheckpoint={this.state.currentCheckpoint}
+          />
           )} />
       </Switch>
       </div>
