@@ -1,10 +1,11 @@
 import React from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const NavBar = (props) => {
     let nav = props.user ? 
         <Nav className="ml-auto">
-            <Nav.Link href="/new">Add New Checkpoint</Nav.Link>
+            <Nav.Link href="/form/100000">Add New Checkpoint</Nav.Link>
             <Nav.Link href="#link">Add Daily Progress</Nav.Link>
             <Nav.Link href="" onClick={ props.handleLogout }>Logout</Nav.Link>
         </Nav>

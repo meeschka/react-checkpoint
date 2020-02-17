@@ -35,7 +35,7 @@ function getAll(userId) {
     })
     .then(res => {
         if (res.ok) return res.json()
-        throw new Error('Database Error')
+        return res.json([])
     })
 }
 

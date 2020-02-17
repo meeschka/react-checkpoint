@@ -4,34 +4,55 @@ import { Link } from 'react-router-dom'
 import checkpoint from '../../services/checkpoint-api'
 
 import Sidepane from '../../components/Sidepane/Sidepane'
-import NewCategoryForm from '../../components/Forms/NewCategoryForm/NewCategoryForm'
+import CategoryForm from '../../components/Forms/CategoryForm/CategoryForm'
 
-import './NewCheckpoint.css'
+import './CheckpointForm.css'
 
-class NewCheckpoint extends Component {
+class CheckpointForm extends Component {
     constructor(props) {
         super(props);
         this.state={
-          invalidForm: true,
-          isLoading: false,
-          formData: {
-              name: '',
-              startDate: '',
-              endDate: '',
-              theme: '',
-              reminders: '',
-              reminderType: 'None',
-              categories: [{
-                  categoryName: '',
-                  positives: '',
-                  negatives: '',
-                  challenges: [],
-                  goals: []
-              }],
-              user:[this.props.user._id],
-          },
+            isNew: Math.abs(this.props.match.params.id) < this.props.checkpoints.length ? false : true,
+            invalidForm: false,
+            isLoading: false,
+            formData: {
+                name: '',
+                startDate: '',
+                endDate: '',
+                theme: '',
+                reminders: '',
+                reminderType: 'None',
+                categories: [{
+                    categoryName: '',
+                    positives: '',
+                    negatives: '',
+                    challenges: [],
+                    goals: []
+                }],
+                user:[this.props.user._id],
+            }
         }
     }
+    async componentDidMount(){
+        await this.props.refreshCheckpoints()
+        let index = Math.abs(this.props.match.params.id)
+            if (index < this.props.checkpoints.length){
+                this.setState({
+                    isNew: false,
+                    formData: {
+                        name: this.props.checkpoints[index].name || '',
+                        startDate: this.props.checkpoints[index].startDate,
+                        endDate: this.props.checkpoints[index].endDate,
+                        theme: this.props.checkpoints[index].theme,
+                        reminders: this.props.checkpoints[index].reminders,
+                        reminderType: this.props.checkpoints[index].reminderType,
+                        categories: this.props.checkpoints[index].categories,
+                        user:[this.props.user._id],
+                    }
+                })
+            }
+    }
+
     handleChange = (e) => {
     //   this.props.updateMessage('')
         let formData = JSON.parse(JSON.stringify(this.state.formData))
@@ -57,7 +78,11 @@ class NewCheckpoint extends Component {
     handleSubmit = async (e) => {
         e.preventDefault()
         this.setState({isLoading: true})
-        await checkpoint.create(this.state.formData)
+        if (this.state.isNew) { 
+            await checkpoint.create(this.state.formData)
+        } else {
+            await checkpoint.update(this.state.formData)
+        }
         this.setState({isLoading: false})
         // if res is okay this.props.history.push('/')
     //post to databse
@@ -106,7 +131,7 @@ class NewCheckpoint extends Component {
             <div className="new-checkpoint-page">
                 <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.selectCheckpoint} />
                 <div className="checkpoint-container">
-                    <h1>New Checkpoint</h1>
+                    <h1>{this.state.isNew ? 'New Checkpoint' : 'Edit Checkpoint'}</h1>
                     <form className="checkpoint-form" onSubmit={this.handleSubmit} onChange={this.handleChange} >
                         <div className = 'checkpoint-main-form'>
                             <div className="form-group">
@@ -118,6 +143,7 @@ class NewCheckpoint extends Component {
                                     id="checkpointNameInput"
                                     aria-describedby="checkpointName"
                                     placeholder="Enter Checkpoint Name"
+                                    value={this.state.formData.name}
                                     name="name"
                                 ></input>
                             </div>
@@ -131,6 +157,7 @@ class NewCheckpoint extends Component {
                                         id="startDateInput"
                                         aria-describedby="checkpointStartDate"
                                         name="startDate"
+                                        value={this.state.formData.startDate}
                                     ></input>
                                     <small id="dateHelp" className="form-text text-muted">We recommend 2 - 3 months.</small>
                                 </div>
@@ -143,6 +170,7 @@ class NewCheckpoint extends Component {
                                         id="endDateInput"
                                         aria-describedby="checkpointEndDate"
                                         name="endDate"
+                                        value={this.state.formData.endDate}
                                     ></input>
                                 </div>
                             </div>
@@ -155,6 +183,7 @@ class NewCheckpoint extends Component {
                                     aria-describedby="checkpointTheme"
                                     placeholder="Enter Checkpoint Theme"
                                     name="theme"
+                                    value={this.state.formData.theme}
                                 ></input>
                             </div>
                             <div className="form-row">
@@ -164,9 +193,10 @@ class NewCheckpoint extends Component {
                                         className="form-control"
                                         id="reminderTypeInput"
                                         name="reminderType">
-                                        <option>None</option>
-                                        <option>Email</option>
-                                        <option>Text</option>
+                                        value={this.state.formData.reminderType}
+                                        <option value="None">None</option>
+                                        <option value="Email">Email</option>
+                                        <option value="Text">Text</option>
                                     </select>
                                 </div>
                                 <div className="form-group col-md-6">
@@ -177,13 +207,14 @@ class NewCheckpoint extends Component {
                                         id="reminderInput"
                                         aria-describedby="reminderFrequencyInput"
                                         name='reminders'
+                                        value={this.state.formData.reminders}
                                     ></input>
                                 </div>
                             </div>
                             <h4>Checkpoint Categories</h4>
                             <p>Try breaking goals up into different sections of your life: social, health, finance, etc.</p>
                         </div>
-                       <NewCategoryForm
+                       <CategoryForm
                             categories={this.state.formData.categories}
                             addChallenge={this.addChallenge}
                             addGoal={this.addGoal}
@@ -191,7 +222,7 @@ class NewCheckpoint extends Component {
                        <div className="form-group">
                             <div className="checkpoint-form-btns">
                                 <button className="btn btn-primary" onClick={this.addCategory}>Add a Category</button>
-                                <button className="btn btn-success" disabled={this.isFormInvalid()}>Create Checkpoint</button>
+                                <button className="btn btn-success" disabled={this.isFormInvalid()} onClick={this.handleSubmit}>{this.props.isNew? "Create Checkpoint" : "Edit Checkpoint"}</button>
                                 <Link to='/' className="btn btn-danger">Cancel</Link>
                             </div>
                         </div> 
@@ -202,4 +233,4 @@ class NewCheckpoint extends Component {
     }
 }
 
-export default NewCheckpoint
+export default CheckpointForm

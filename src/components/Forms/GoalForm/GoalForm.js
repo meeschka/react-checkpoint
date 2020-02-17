@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NewGoalForm = (props) => {
+const GoalForm = (props) => {
     let id = [props.categoryIdx, props.goalIdx]
     let idStr = `${props.categoryIdx}-${props.goalIdx}`
     return (
@@ -50,4 +50,4 @@ const NewGoalForm = (props) => {
     )
 }
 
-export default NewGoalForm
+export default GoalForm

@@ -16,7 +16,7 @@ class CategoryOverview extends Component {
             this.props.categories.map((category, idx) => {
                 let catId = `cat-${idx}`
                 return (
-                    <div key={catId} class='category-overview-el'>
+                    <div key={catId} className='category-overview-el'>
                         <h2>{category.categoryName}</h2>
                         {category.positives ? <h4 key={catId+'-positives'}>Positives: {category.positives}</h4> : <p>No positives listed</p>}
                         {category.negatives ? <h4 key={catId+'-negatives'}>Areas for Improvement: {category.negatives}</h4> : <p>No areas for improvement listed</p>}
