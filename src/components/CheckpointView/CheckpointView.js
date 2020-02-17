@@ -19,7 +19,7 @@ class CheckpointView extends Component{
             <div className='checkpoint-view-container'>
                 <h1>{this.props.checkpoint.name}</h1>
                 <h3>{this.props.checkpoint.theme}</h3>
-                <div className='d-flex justify-content-between w-75'>
+                <div className='d-flex justify-content-between w-75 mb-3'>
                     <div>
                         {`From ${this.props.checkpoint.startDate.slice(0, 10)} to ${this.props.checkpoint.endDate.slice(0, 10)}`}
                     </div>

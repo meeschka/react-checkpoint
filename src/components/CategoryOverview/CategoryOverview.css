@@ -1,0 +1,7 @@
+.category-overview-el{
+    width: 100%;
+    padding: 20px 50px;
+}
+.category-overview-el:nth-child(even){
+    background-color: #D6E9D5;
+}

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import checkpoint from '../../services/checkpoint-api'
 
 import Sidepane from '../../components/Sidepane/Sidepane'
-import NewCategoryForm from '../../components/NewCategoryForm/NewCategoryForm'
+import NewCategoryForm from '../../components/Forms/NewCategoryForm/NewCategoryForm'
 
 import './NewCheckpoint.css'
 

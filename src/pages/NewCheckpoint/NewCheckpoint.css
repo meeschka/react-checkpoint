@@ -1,6 +1,6 @@
 .new-checkpoint-page {
     display: flex;
-    height: 100%;
+    height: 95vh;
 }
 .checkpoint-container {
     display: flex;
