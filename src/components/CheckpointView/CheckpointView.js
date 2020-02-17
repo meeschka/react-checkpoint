@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { Modal } from 'react-bootstrap'
 
 import CategoryOverview from '../CategoryOverview/CategoryOverview'
 import './CheckpointView.css'
@@ -7,7 +8,18 @@ class CheckpointView extends Component{
     constructor(props) {
         super(props);
         this.state={
+            modalOn: false
         }
+    }
+
+    toggleModal = () => {
+        let current = this.state.modalOn
+        this.setState({ modalOn: !current})
+    }
+
+    closeModalAndDelete = () => {
+        this.toggleModal()
+        this.props.handleDeleteCheckpoint()
     }
 
     render() {
@@ -28,7 +40,21 @@ class CheckpointView extends Component{
                     </div>
                 </div>
                 <CategoryOverview categories={this.props.checkpoint.categories} />
-
+                <div className='checkpoint-view-btns'>
+                    <button className='btn btn-success'>Add Daily Progress</button>
+                    <button className='btn btn-primary'>Edit Checkpoint</button>
+                    <button className='btn btn-danger' onClick={this.toggleModal}>Delete Checkpoint</button>
+                </div>
+            <Modal show={this.state.modalOn} onHide={this.toggleModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to permenantly delete this checkpoint, and all your progress on it?</Modal.Body>
+                <Modal.Footer>
+                    <button className='btn btn-primary' onClick={this.toggleModal}>Cancel</button>
+                    <button className='btn btn-danger' onClick={this.closeModalAndDelete}>Delete Checkpoint</button>
+                </Modal.Footer>
+            </Modal>
             </div>
         )
     }

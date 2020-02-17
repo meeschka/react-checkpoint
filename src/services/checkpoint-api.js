@@ -12,8 +12,17 @@ function create(checkpoint) {
         body: JSON.stringify(checkpoint)
     })
     .then(res => {
-        if (res.ok) return res.json();
+        if (res.ok) return res.json()
         throw new Error('New checkpoint could not be added.')
+    })
+}
+
+function deleteCheckpoint(checkpointId) {
+    return fetch(`${BASE_URL}/${checkpointId}`, {
+        method: 'DELETE'
+    }).then(res => {
+        if (res.ok) return res.json()
+        throw new Error('Checkpoint could not be deleted')
     })
 }
 
@@ -32,5 +41,6 @@ function getAll(userId) {
 
 export default {
     create,
+    deleteCheckpoint,
     getAll
 }

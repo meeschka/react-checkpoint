@@ -5,3 +5,12 @@
     align-items: center;
     width: 100%;
 }
+.checkpoint-view-btns {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px;
+    width: 100%;
+}
+.checkpoint-view-btns .btn {
+    width: 30%
+}

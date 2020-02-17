@@ -10,6 +10,15 @@ async function create(req, res) {
     }
 }
 
+async function deleteCheckpoint(req, res) {
+    try {
+        const deletedCheckpoint = await Checkpoint.findByIdAndDelete(req.params.id)
+        res.status(200).json(deletedCheckpoint)
+    } catch (err) {
+        res.status(400).json({message: 'err'})
+    }
+}
+
 async function index(req, res) {
     try {
         const user = req.user._id
@@ -22,5 +31,6 @@ async function index(req, res) {
 
 module.exports = {
     create,
+    delete: deleteCheckpoint,
     index
 }

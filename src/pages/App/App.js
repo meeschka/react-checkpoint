@@ -28,6 +28,18 @@ class App extends Component {
     this.setState({currentCheckpoint: e.target.dataset.id})
   }
 
+  refreshCheckpoints = async () => {
+    const checkpoints = await checkpointAPI.getAll()
+    if (checkpoints.length > 0) {
+      this.setState({ checkpoints: checkpoints, currentCheckpoint: 0})
+    } else (this.setState({checkpoints: checkpoints, currentCheckpoint: ''}))
+  }
+
+  handleDeleteCheckpoint = async () => {
+    const deletedCheckpoint = await checkpointAPI.deleteCheckpoint(this.state.checkpoints[this.state.currentCheckpoint]._id)
+    this.refreshCheckpoints()
+  }
+
   //Auth methods
   handleSignupOrLogin = () => {
     this.setState({ user: userService.getUser()})
@@ -41,11 +53,7 @@ class App extends Component {
   //Lifecycle Methods
   async componentDidMount() {
     if (this.state.user) {
-      const checkpoints = await checkpointAPI.getAll()
-      this.setState({
-        checkpoints: checkpoints,
-        currentCheckpoint: 0
-      })
+      await this.refreshCheckpoints()
     }
   }
 
@@ -76,6 +84,7 @@ class App extends Component {
           checkpoints={this.state.checkpoints}
           selectCheckpoint={this.selectCheckpoint}
           currentCheckpoint={this.state.currentCheckpoint}
+          handleDeleteCheckpoint={this.handleDeleteCheckpoint}
           />
           )} />
       </Switch>
