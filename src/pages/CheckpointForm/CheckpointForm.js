@@ -81,10 +81,10 @@ class CheckpointForm extends Component {
         if (this.state.isNew) { 
             await checkpoint.create(this.state.formData)
         } else {
-            await checkpoint.update(this.state.formData)
+            await checkpoint.update(this.props.checkpoints[Math.abs(this.props.match.params.id)]._id, this.state.formData)
         }
         this.setState({isLoading: false})
-        // if res is okay this.props.history.push('/')
+        this.props.history.push('/')
     //post to databse
     }
 

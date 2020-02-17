@@ -27,7 +27,7 @@ const CategoryForm = (props) => {
                             aria-describedby="categoryName"
                             placeholder="Enter Category Name"
                             name={catId}
-                            value={props.categories[idx].name}></input>
+                            value={props.categories[idx].categoryName}></input>
                     </div>
                     <div className="form-group">
                         <label htmlFor={posId}>Positives</label>
