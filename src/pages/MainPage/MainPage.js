@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Sidepane from '../../components/Sidepane/Sidepane'
-import Mainpane from '../../components/Mainpane/Mainpane'
+import CheckpointView from '../../components/CheckpointView/CheckpointView'
 import Intropane from '../../components/Intropane/Intropane'
 
 class MainPage extends Component{
@@ -13,11 +13,11 @@ class MainPage extends Component{
 
     render() {
         const mainView = this.props.checkpoints.length > 0 ?
-            <Mainpane checkpoints={this.props.checkpoints} currentCheckpoint={this.props.currentCheckpoint} />
+            <CheckpointView checkpoint={this.props.checkpoints[this.props.currentCheckpoint]} />
             :
             <Intropane />
         return (
-            <div class='d-flex'>
+            <div className='d-flex h-100'>
                 <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.selectCheckpoint} />
                 {mainView}
             </div>

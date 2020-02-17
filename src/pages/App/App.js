@@ -42,8 +42,10 @@ class App extends Component {
   async componentDidMount() {
     if (this.state.user) {
       const checkpoints = await checkpointAPI.getAll()
-      this.setState({checkpoints})
-      if (checkpoints.length > 0 && !this.state.currentCheckpoint) {this.setState({currentCheckpoint: 0})}
+      this.setState({
+        checkpoints: checkpoints,
+        currentCheckpoint: 0
+      })
     }
   }
 

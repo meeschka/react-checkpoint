@@ -12,7 +12,7 @@ const NewCategoryForm = (props) => {
             let titleText = props.categories[idx].name ? props.categories[idx].name : `Category ${idx+1}`
             return (
                 <div key={catId} className="single-category-form">
-                    <div class='category-header-form d-flex justify-content-between'>
+                    <div className='category-header-form d-flex justify-content-between'>
                         <h3>{titleText}</h3>
                         <button className='btn btn-danger'>Remove Category</button>
                     </div>

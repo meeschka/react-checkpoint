@@ -8,7 +8,7 @@ class Intropane extends Component {
         return (
             <div className="d-flex flex-column align-items-center w-100 mt-5">
                 <h1 className='text-center'>Hello and welcome to checkpoint</h1>
-                <div class='d-flex flex-row justify-content-around flex-wrap'>
+                <div className='d-flex flex-row justify-content-around flex-wrap'>
                     <div className="intro-card">
                         <i className="fas fa-seedling fa-8x"></i>
                         <h3>Use checkpoint to make meaningful goals over realistic timelines</h3>
