@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Modal } from 'react-bootstrap'
-
+import { Link } from 'react-router-dom'
 import CategoryOverview from '../CategoryOverview/CategoryOverview'
 import './CheckpointView.css'
 
@@ -42,7 +42,7 @@ class CheckpointView extends Component{
                 <CategoryOverview categories={this.props.checkpoint.categories} />
                 <div className='checkpoint-view-btns'>
                     <button className='btn btn-success'>Add Daily Progress</button>
-                    <button className='btn btn-primary'>Edit Checkpoint</button>
+                    <Link to={`/form/${this.props.checkpointIdx}`} className='btn btn-primary'>Edit Checkpoint</Link>
                     <button className='btn btn-danger' onClick={this.toggleModal}>Delete Checkpoint</button>
                 </div>
             <Modal show={this.state.modalOn} onHide={this.toggleModal}>

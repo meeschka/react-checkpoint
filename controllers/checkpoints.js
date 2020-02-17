@@ -29,8 +29,17 @@ async function index(req, res) {
     }
 }
 
+async function update(req, res) {
+    try {
+        const updatedCheckpoint = await Checkpoint.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        res.status(200).json(updatedCheckpoint)
+    } catch (err) {
+        res.status(400).json({message: err})
+    }
+}
 module.exports = {
     create,
     delete: deleteCheckpoint,
-    index
+    index,
+    update
 }

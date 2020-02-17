@@ -9,9 +9,9 @@ import checkpointAPI from '../../services/checkpoint-api'
 import SignupPage from '../SignupPage/SignupPage'
 import LoginPage from '../LoginPage/LoginPage'
 import MainPage from '../MainPage/MainPage'
-
+import CheckpointForm from '../CheckpointForm/CheckpointForm'
 import NavBar from '../../components/Navbar/Navbar'
-import NewCheckpoint from '../NewCheckpoint/NewCheckpoint';
+
 
 class App extends Component {
   constructor() {
@@ -19,7 +19,7 @@ class App extends Component {
     this.state={
       user: userService.getUser(),
       checkpoints: [],
-      currentCheckpoint: ''
+      currentCheckpoint: '',
     }
   }
 
@@ -31,12 +31,12 @@ class App extends Component {
   refreshCheckpoints = async () => {
     const checkpoints = await checkpointAPI.getAll()
     if (checkpoints.length > 0) {
-      this.setState({ checkpoints: checkpoints, currentCheckpoint: 0})
+      this.setState({ checkpoints: checkpoints, currentCheckpoint: this.state.currentCheckpoint || 0})
     } else (this.setState({checkpoints: checkpoints, currentCheckpoint: ''}))
   }
 
   handleDeleteCheckpoint = async () => {
-    const deletedCheckpoint = await checkpointAPI.deleteCheckpoint(this.state.checkpoints[this.state.currentCheckpoint]._id)
+    await checkpointAPI.deleteCheckpoint(this.state.checkpoints[this.state.currentCheckpoint]._id)
     this.refreshCheckpoints()
   }
 
@@ -73,13 +73,14 @@ class App extends Component {
           history={history}
           handleSignupOrLogin={this.handleSignupOrLogin}
         />} />
-        <Route exact path='/new' render={({history}) => <><NewCheckpoint
-          history={history} 
+        <Route exact path='/form/:id' render={(props) => <CheckpointForm
+          {...props}
           user={this.state.user}
           checkpoints={this.state.checkpoints}
           selectCheckpoint={this.selectCheckpoint}
+          refreshCheckpoints={this.refreshCheckpoints}
         />
-        </>} />
+        } />
         <Route exact path='/' render={() => (<MainPage 
           checkpoints={this.state.checkpoints}
           selectCheckpoint={this.selectCheckpoint}

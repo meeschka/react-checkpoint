@@ -3,6 +3,7 @@
     /* background-color: rgb(243, 253, 241); */
     background-color: #D6E9D5;
     color: #001806;
+    min-height: 100%;
 }
 .sidepane h3 {
     padding: 1em;

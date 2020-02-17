@@ -35,12 +35,28 @@ function getAll(userId) {
     })
     .then(res => {
         if (res.ok) return res.json()
-        throw new Error('Database Error')
+        return res.json([])
+    })
+}
+
+function update(checkpointId, updatedCheckpoint){
+    return fetch(`${BASE_URL}/${checkpointId}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer '+ tokenService.getToken()
+        },
+        body: JSON.stringify(updatedCheckpoint)
+    })
+    .then(res => {
+        if (res.ok) return res.json()
+        throw new Error('Checkpoint could not be updated')
     })
 }
 
 export default {
     create,
     deleteCheckpoint,
-    getAll
+    getAll,
+    update
 }

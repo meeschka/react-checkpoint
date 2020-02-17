@@ -1,11 +1,11 @@
 import React from 'react'
 
-import NewGoalForm from '../NewGoalForm/NewGoalForm'
-import NewChallengeForm from '../NewChallengeForm/NewChallengeForm.js'
+import GoalForm from '../GoalForm/GoalForm'
+import ChallengeForm from '../ChallengeForm/ChallengeForm.js'
 
-import './NewCategoryForm.css'
+import './CategoryForm.css'
 
-const NewCategoryForm = (props) => {
+const CategoryForm = (props) => {
     return (
         props.categories.map((category, idx) => {
             let catId = `cat-${idx}`, posId = `pos-${idx}`, negId = `neg-${idx}`
@@ -27,7 +27,7 @@ const NewCategoryForm = (props) => {
                             aria-describedby="categoryName"
                             placeholder="Enter Category Name"
                             name={catId}
-                            value={props.categories[idx].name}></input>
+                            value={props.categories[idx].categoryName}></input>
                     </div>
                     <div className="form-group">
                         <label htmlFor={posId}>Positives</label>
@@ -65,7 +65,7 @@ const NewCategoryForm = (props) => {
                     </div>
                     {category.goals.length > 0 ? <h3>Goals</h3> : ''}
                     {category.goals.map((goal, num) => (
-                        <NewGoalForm 
+                        <GoalForm 
                             categoryIdx={idx}
                             goalIdx={num}
                             goal={goal}
@@ -73,7 +73,7 @@ const NewCategoryForm = (props) => {
                     ))}
                     {category.challenges.length > 0 ? <h3>Challenges</h3> : ''}
                     {category.challenges.map((challenge, num) => (
-                        <NewChallengeForm 
+                        <ChallengeForm 
                             categoryIdx={idx}
                             challengeIdx={num}
                             challenge={challenge}
@@ -86,4 +86,4 @@ const NewCategoryForm = (props) => {
     )
 }
 
-export default NewCategoryForm
+export default CategoryForm

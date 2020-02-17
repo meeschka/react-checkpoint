@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NewChallengeForm = (props) => {
+const ChallengeForm = (props) => {
     let id = [props.categoryIdx, props.challengeIdx]
     let idStr = `${props.categoryIdx}-${props.challengeIdx}`
     return (
@@ -38,4 +38,4 @@ const NewChallengeForm = (props) => {
     )
 }
 
-export default NewChallengeForm
+export default ChallengeForm
