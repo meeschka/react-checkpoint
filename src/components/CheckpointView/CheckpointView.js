@@ -15,13 +15,28 @@ class CheckpointView extends Component{
             deleteModal: false,
             updateModal: false,
             avgScore: '',
-            avgScores: ''
+            avgScores: [],
+            calendarData: []
         }
     }
 
     componentDidMount = () => {
-        // let results = dataService.processDataForRadar(this.props.checkpoint)
-        // console.log(results)
+        this.getScores()
+    }
+    componentDidUpdate = (prevProps) => {
+        if (this.props.checkpoint !== prevProps.checkpoint) {
+            this.getScores()
+        }
+    }
+    getScores = () => {
+        let results = dataService.getAverages(this.props.checkpoint)
+        let calendarData = dataService.processDataForCalendars(this.props.checkpoint)
+        this.setState({
+            avgScore: results.totalAvg,
+            avgScores: results.categoryAvg,
+            calendarData: calendarData
+        })
+        console.log(this.state)
     }
 
     toggleDeleteModal = () => {
@@ -52,6 +67,7 @@ class CheckpointView extends Component{
             <div className='checkpoint-view-container'>
                 <h1>{this.props.checkpoint.name}</h1>
                 <h3>{this.props.checkpoint.theme}</h3>
+                <h3>{this.state.avgScore ? `Average score is ${this.state.avgScore} / 5` : `No daily progress entered so far`}</h3>
                 <div className='d-flex justify-content-between w-75 mb-3'>
                     <div>
                         {`From ${this.props.checkpoint.startDate.slice(0, 10)} to ${this.props.checkpoint.endDate.slice(0, 10)}`}
@@ -60,7 +76,7 @@ class CheckpointView extends Component{
                         {`Reminders: ${reminderStr}`}
                     </div>
                 </div>
-                <CategoryOverview categories={this.props.checkpoint.categories} />
+                <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} />
                 <div className='checkpoint-view-btns'>
                     <button className='btn btn-success' onClick={this.toggleUpdateModal}>Add Daily Progress</button>
                     <Link to={`/form/${this.props.checkpointIdx}`} className='btn btn-primary'>Edit Checkpoint</Link>

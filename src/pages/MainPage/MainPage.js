@@ -15,7 +15,11 @@ class MainPage extends Component{
 
     render() {
         const mainView = this.props.checkpoints.length > 0 ?
-            <CheckpointView checkpoint={this.props.checkpoints[this.props.currentCheckpoint]} checkpointIdx={this.props.currentCheckpoint} handleDeleteCheckpoint={this.props.handleDeleteCheckpoint}/>
+            <CheckpointView
+                checkpoint={this.props.checkpoints[this.props.currentCheckpoint]}
+                checkpointIdx={this.props.currentCheckpoint}
+                handleDeleteCheckpoint={this.props.handleDeleteCheckpoint}
+                refreshCheckpoints={this.props.refreshCheckpoints}/>
             :
             <Intropane />
         return (

@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import './CategoryOverview.css'
 import GoalOverview from '../GoalOverview/GoalOverview'
 import ChallengeOverview from '../ChallengeOverview/ChallengeOverview'
+import CalendarGraph from '../Graphs/CalendarGraph/CalendarGraph'
+import NoScores from '../Graphs/NoScores/NoScores'
 
 class CategoryOverview extends Component {
     constructor(props) {
@@ -28,9 +30,15 @@ class CategoryOverview extends Component {
                             <ChallengeOverview challenges={category.challenges} catId={catId} key={catId+'-challenges'}/>
                             :
                             <p key={catId+'-challenges'}>No challenges set for {category.categoryName} for this checkpoint</p>}
-                        <div>
+                        {category.scores.length > 0 ? 
+                            <CalendarGraph checkpoint={this.props.checkpoint} data={this.props.calendarData[idx]} />
+                            :
+                            <NoScores />
+                        }
+                        
+                        {/* <div>
                             <i class="far fa-star"></i>
-                        </div>
+                        </div> */}
                     </div>
                 )
 

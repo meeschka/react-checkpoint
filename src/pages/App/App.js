@@ -86,6 +86,7 @@ class App extends Component {
           selectCheckpoint={this.selectCheckpoint}
           currentCheckpoint={this.state.currentCheckpoint}
           handleDeleteCheckpoint={this.handleDeleteCheckpoint}
+          refreshCheckpoints={this.refreshCheckpoints}
           />
           )} />
       </Switch>
