@@ -78,6 +78,7 @@ class CheckpointForm extends Component {
     handleSubmit = async (e) => {
         e.preventDefault()
         let formData = this.state.formData
+        formData.reminderType = formData.reimderType || "None"
         this.setState({isLoading: true})
         if (this.state.isNew) { 
             await checkpoint.create(formData)

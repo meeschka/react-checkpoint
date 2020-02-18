@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+
 import CategoryOverview from '../CategoryOverview/CategoryOverview'
 import './CheckpointView.css'
 
@@ -71,7 +72,7 @@ class CheckpointView extends Component{
                 <Modal.Header closeButton>
                     <Modal.Title>Daily Progress</Modal.Title>
                 </Modal.Header>
-                <Modal.Body><DailyProgressForm checkpoint={this.props.checkpoint} /></Modal.Body>
+                <Modal.Body><DailyProgressForm checkpoint={this.props.checkpoint} toggleUpdateModal={this.toggleUpdateModal} /></Modal.Body>
                 <Modal.Footer>
                     <button className='btn btn-primary' onClick={this.toggleUpdateModal}>Submit</button>
                     <button className='btn btn-danger' onClick={this.toggleUpdateModal}>Cancel</button>
