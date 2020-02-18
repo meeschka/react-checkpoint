@@ -28,6 +28,9 @@ class CategoryOverview extends Component {
                             <ChallengeOverview challenges={category.challenges} catId={catId} key={catId+'-challenges'}/>
                             :
                             <p key={catId+'-challenges'}>No challenges set for {category.categoryName} for this checkpoint</p>}
+                        <div>
+                            <i class="far fa-star"></i>
+                        </div>
                     </div>
                 )
 

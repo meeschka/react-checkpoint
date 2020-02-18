@@ -2,8 +2,6 @@ const User = require('../models/user')
 const Checkpoint = require('../models/checkpoint')
 
 async function create(req, res) {
-    console.log('hi from controller')
-    console.log(req.body)
     try {
         Checkpoint.findById(req.params.id)
         .then(checkpoint => {
@@ -22,5 +20,5 @@ async function create(req, res) {
 }
 
 module.exports = {
-    create,
+    create
 }

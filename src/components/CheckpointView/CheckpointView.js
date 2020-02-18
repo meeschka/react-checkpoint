@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import dataService from '../../utils/dataService'
 
 import CategoryOverview from '../CategoryOverview/CategoryOverview'
 import './CheckpointView.css'
@@ -12,8 +13,15 @@ class CheckpointView extends Component{
         super(props)
         this.state={
             deleteModal: false,
-            updateModal: false
+            updateModal: false,
+            avgScore: '',
+            avgScores: ''
         }
+    }
+
+    componentDidMount = () => {
+        // let results = dataService.processDataForRadar(this.props.checkpoint)
+        // console.log(results)
     }
 
     toggleDeleteModal = () => {

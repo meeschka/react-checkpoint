@@ -16,7 +16,6 @@ class DailyProgressForm extends Component {
         let progress = []
         let today = new Date()
         let currentMonth = ((today.getMonth()).toString()).padStart(2, '0')
-        console.log(currentMonth)
         let date = `${today.getFullYear()}-${currentMonth}-${today.getDate()}`
         for(let i=0; i<this.props.checkpoint.categories.length; i++){
             progress.push({
@@ -25,9 +24,7 @@ class DailyProgressForm extends Component {
                 date: date
             })  
         }
-        console.log(progress)
-        this.setState({ dailyProgress: progress })
-        this.setState({ date: `${today.getFullYear()}-${currentMonth}-${today.getDate()}` })
+        this.setState({ dailyProgress: progress, date: `${today.getFullYear()}-${currentMonth}-${today.getDate()}` })
     }
 
     changeStars = (newRating, name) => {
