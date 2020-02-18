@@ -51,12 +51,12 @@ class CheckpointForm extends Component {
                     }
                 })
             }
+            console.log(this.state)
     }
 
     handleChange = (e) => {
     //   this.props.updateMessage('')
         let formData = JSON.parse(JSON.stringify(this.state.formData))
-        console.log(formData)
         if (["form-control categoryName", "form-control positives", "form-control negatives"].includes(e.target.className)) {
             let keyName = e.target.className.slice(13)
             formData.categories[e.target.dataset.id][keyName] = e.target.value
@@ -77,15 +77,18 @@ class CheckpointForm extends Component {
     
     handleSubmit = async (e) => {
         e.preventDefault()
+        let formData = this.state.formData
+        formData.startDate = formData.startDate.split('T')[0]
+        formData.endDate = formData.endDate.split('T')[0]
+        console.log(formData)
         this.setState({isLoading: true})
         if (this.state.isNew) { 
-            await checkpoint.create(this.state.formData)
+            await checkpoint.create(formData)
         } else {
             await checkpoint.update(this.props.checkpoints[Math.abs(this.props.match.params.id)]._id, this.state.formData)
         }
         this.setState({isLoading: false})
         this.props.history.push('/')
-    //post to databse
     }
 
     addCategory = (e) => {

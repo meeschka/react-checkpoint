@@ -4,22 +4,34 @@ import { Link } from 'react-router-dom'
 import CategoryOverview from '../CategoryOverview/CategoryOverview'
 import './CheckpointView.css'
 
+import DailyProgressForm from '../Forms/DailyProgressForm/DailyProgressForm'
+
 class CheckpointView extends Component{
     constructor(props) {
-        super(props);
+        super(props)
         this.state={
-            modalOn: false
+            deleteModal: false,
+            updateModal: false
         }
     }
 
-    toggleModal = () => {
-        let current = this.state.modalOn
-        this.setState({ modalOn: !current})
+    toggleDeleteModal = () => {
+        let current = this.state.deleteModal
+        this.setState({ deleteModal: !current })
+    }
+
+    toggleUpdateModal = () => {
+        let current = this.state.updateModal
+        this.setState({ updateModal: !current })
     }
 
     closeModalAndDelete = () => {
-        this.toggleModal()
+        this.toggleDeleteModal()
         this.props.handleDeleteCheckpoint()
+    }
+
+    closeModalAndUpdate = () => {
+        //update daily progress
     }
 
     render() {
@@ -41,18 +53,28 @@ class CheckpointView extends Component{
                 </div>
                 <CategoryOverview categories={this.props.checkpoint.categories} />
                 <div className='checkpoint-view-btns'>
-                    <button className='btn btn-success'>Add Daily Progress</button>
+                    <button className='btn btn-success' onClick={this.toggleUpdateModal}>Add Daily Progress</button>
                     <Link to={`/form/${this.props.checkpointIdx}`} className='btn btn-primary'>Edit Checkpoint</Link>
-                    <button className='btn btn-danger' onClick={this.toggleModal}>Delete Checkpoint</button>
+                    <button className='btn btn-danger' onClick={this.toggleDeleteModal}>Delete Checkpoint</button>
                 </div>
-            <Modal show={this.state.modalOn} onHide={this.toggleModal}>
+            <Modal show={this.state.deleteModal} onHide={this.toggleDeleteModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirm Delete</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Are you sure you want to permenantly delete this checkpoint, and all your progress on it?</Modal.Body>
                 <Modal.Footer>
-                    <button className='btn btn-primary' onClick={this.toggleModal}>Cancel</button>
+                    <button className='btn btn-primary' onClick={this.toggleDeleteModal}>Cancel</button>
                     <button className='btn btn-danger' onClick={this.closeModalAndDelete}>Delete Checkpoint</button>
+                </Modal.Footer>
+            </Modal>
+            <Modal show={this.state.updateModal} onHide={this.toggleUpdateModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Daily Progress</Modal.Title>
+                </Modal.Header>
+                <Modal.Body><DailyProgressForm checkpoint={this.props.checkpoint} /></Modal.Body>
+                <Modal.Footer>
+                    <button className='btn btn-primary' onClick={this.toggleUpdateModal}>Submit</button>
+                    <button className='btn btn-danger' onClick={this.toggleUpdateModal}>Cancel</button>
                 </Modal.Footer>
             </Modal>
             </div>
