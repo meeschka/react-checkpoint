@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import checkpoint from '../../services/checkpoint-api'
 
 import Sidepane from '../../components/Sidepane/Sidepane'
 import CategoryForm from '../../components/Forms/CategoryForm/CategoryForm'
+import InfiniteCalendar, {
+    Calendar,
+    withRange,
+  } from 'react-infinite-calendar';
+import 'react-infinite-calendar/styles.css';
 
 import './CheckpointForm.css'
 
@@ -12,13 +18,15 @@ class CheckpointForm extends Component {
     constructor(props) {
         super(props);
         this.state={
+            today: new Date(),
             isNew: Math.abs(this.props.match.params.id) < this.props.checkpoints.length ? false : true,
             invalidForm: false,
             isLoading: false,
+            calendarWithRange: withRange(Calendar),
             formData: {
                 name: '',
-                startDate: '',
-                endDate: '',
+                startDate: new Date(),
+                endDate: new Date(),
                 theme: '',
                 reminders: '',
                 reminderType: 'None',
@@ -32,6 +40,7 @@ class CheckpointForm extends Component {
                 user:[this.props.user._id],
             }
         }
+        console.log(this.state)
     }
     async componentDidMount(){
         await this.props.refreshCheckpoints()
@@ -56,7 +65,6 @@ class CheckpointForm extends Component {
     handleChange = (e) => {
     //   this.props.updateMessage('')
         let formData = JSON.parse(JSON.stringify(this.state.formData))
-        console.log(formData)
         if (["form-control categoryName", "form-control positives", "form-control negatives"].includes(e.target.className)) {
             let keyName = e.target.className.slice(13)
             formData.categories[e.target.dataset.id][keyName] = e.target.value
@@ -72,7 +80,6 @@ class CheckpointForm extends Component {
             formData[e.target.name] = e.target.value
         } 
         this.setState({ formData })
-        // console.log(this.state.formData)
     }
     
     handleSubmit = async (e) => {
@@ -147,6 +154,16 @@ class CheckpointForm extends Component {
                                     name="name"
                                 ></input>
                             </div>
+                            <InfiniteCalendar
+                                Component={this.state.calendarWithRange}
+                                selected={{
+                                start: new Date(),
+                                end: new Date(),
+                                }}
+                                locale={{
+                                headerFormat: 'MMM Do',
+                                }}
+                            />
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="checkpointStartDate">Start Date</label>
