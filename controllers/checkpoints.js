@@ -3,9 +3,12 @@ const Checkpoint = require('../models/checkpoint')
 
 async function create(req, res) {
     try {
+        console.log(req.body.categories[0].challenges)
         const checkpoint = await Checkpoint.create(req.body)
+        console.log(checkpoint)
         res.status(201).json(checkpoint)
     } catch (err) {
+        console.log(err)
         res.status(401).json({message: err})
     }
 }

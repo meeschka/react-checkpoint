@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 
 import { Form } from 'react-bootstrap'
+import checkpoint from '../../../services/checkpoint-api'
 
 class DailyProgressForm extends Component {
     constructor(props) {
         super(props)
         this.state={
-            dailyProgress: []
+            dailyProgress: [],
+            date: new Date()
         }
     }
     componentDidMount() {
@@ -28,9 +30,11 @@ class DailyProgressForm extends Component {
         this.setState({ dailyProgress })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault()
-
+        console.log('hit handle submit')
+        await checkpoint.addProgress(this.props.checkpoint._id, this.state.dailyProgress, this.state.date)
+        console.log("done")
     }
 
     render() {
@@ -68,6 +72,7 @@ class DailyProgressForm extends Component {
             <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
                 <div className="daily-progress">
                     {content}
+                    <input type="submit" />
                 </div>
             </Form>
         )

@@ -78,9 +78,6 @@ class CheckpointForm extends Component {
     handleSubmit = async (e) => {
         e.preventDefault()
         let formData = this.state.formData
-        formData.startDate = formData.startDate.split('T')[0]
-        formData.endDate = formData.endDate.split('T')[0]
-        console.log(formData)
         this.setState({isLoading: true})
         if (this.state.isNew) { 
             await checkpoint.create(formData)

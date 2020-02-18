@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
-import logo from '../../checkpoint.svg';
+// import logo from '../../checkpoint.svg';
 import './App.css';
 
 import userService from '../../utils/userService'
