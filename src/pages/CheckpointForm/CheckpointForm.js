@@ -40,12 +40,15 @@ class CheckpointForm extends Component {
         }
         let index = Math.abs(this.props.match.params.id)
             if (index < this.props.checkpoints.length){
+                //convert dates to be readible by calendar inputs
+                const startDate = this.props.checkpoints[index].startDate.slice(0,10)
+                const endDate = this.props.checkpoints[index].endDate.slice(0,10)
                 this.setState({
                     isNew: false,
                     formData: {
                         name: this.props.checkpoints[index].name || '',
-                        startDate: this.props.checkpoints[index].startDate,
-                        endDate: this.props.checkpoints[index].endDate,
+                        startDate: startDate,
+                        endDate: endDate,
                         theme: this.props.checkpoints[index].theme,
                         reminders: this.props.checkpoints[index].reminders,
                         reminderType: this.props.checkpoints[index].reminderType,
@@ -127,6 +130,60 @@ class CheckpointForm extends Component {
         this.setState({ formData })
     }
 
+    quickStart = () => {
+        let today = new Date();
+        let threeMonths = new Date(today.getTime()+ 1000*60*60*24*7*12)
+        let formattedToday = today.toISOString().slice(0,10)
+        let formattedThreeMonths = threeMonths.toISOString().slice(0,10)
+        const formData = {
+            name: 'Checkpoint',
+            startDate: formattedToday,
+            endDate: formattedThreeMonths,
+            theme: '',
+            reminders: '',
+            reminderType: 'None',
+            categories: [{
+                categoryName: 'Health',
+                positives: '',
+                negatives: '',
+                challenges: [],
+                goals: []
+            }, {
+            categoryName: 'Finance',
+            positives: '',
+            negatives: '',
+            challenges: [],
+            goals: []
+            }, {
+            categoryName: 'Social',
+            positives: '',
+            negatives: '',
+            challenges: [],
+            goals: []
+            }, {
+            categoryName: 'Relationship',
+            positives: '',
+            negatives: '',
+            challenges: [],
+            goals: []
+            }, {
+            categoryName: 'Career',
+                positives: '',
+                negatives: '',
+                challenges: [],
+                goals: []
+            }, {
+                categoryName: 'Hobby',
+                positives: '',
+                negatives: '',
+                challenges: [],
+                goals: []
+            }],
+            user:[this.props.user._id] || '',
+        }
+        this.setState({ formData })
+    }
+
     removeCategory = (e) => {
         e.preventDefault()
         const idx = e.target.dataset.id
@@ -164,7 +221,8 @@ class CheckpointForm extends Component {
             <div className="new-checkpoint-page">
                 <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.navigateToCheckpoint} user={this.props.user} />
                 <div className="checkpoint-container">
-                    <h1>{this.state.isNew ? 'New Checkpoint' : 'Edit Checkpoint'}</h1>
+                    <h1 className='mb-4'>{this.state.isNew ? 'New Checkpoint' : 'Edit Checkpoint'}</h1>
+                    {this.state.isNew ? <button className="btn btn-sm btn-secondary" onClick={this.quickStart}>Quickstart</button> : ''}
                     <form className="checkpoint-form" onSubmit={this.handleSubmit} onChange={this.handleChange} >
                         <div className = 'checkpoint-main-form'>
                             <div className="form-group">
@@ -258,7 +316,7 @@ class CheckpointForm extends Component {
                        <div className="form-group">
                             <div className="checkpoint-form-btns">
                                 <button className="btn btn-primary" onClick={this.addCategory}>Add a Category</button>
-                                <button className="btn btn-success" disabled={this.isFormInvalid()} onClick={this.handleSubmit}>{this.props.isNew? "Create Checkpoint" : "Edit Checkpoint"}</button>
+                                <button className="btn btn-success" disabled={this.isFormInvalid()} onClick={this.handleSubmit}>{this.state.isNew? "Create Checkpoint" : "Edit Checkpoint"}</button>
                                 <Link to='/' className="btn btn-danger">Cancel</Link>
                             </div>
                         </div> 
