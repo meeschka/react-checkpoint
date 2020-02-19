@@ -22,6 +22,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.1",
     "react-star-ratings": "^2.3.0",
+    "react-tooltip": "^4.0.3",
     "serve-favicon": "^2.5.0"
   },
   "scripts": {

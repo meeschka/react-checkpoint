@@ -1,7 +1,10 @@
 import React from 'react'
 import CalendarHeatmap from 'react-calendar-heatmap'
+import ReactTooltip from 'react-tooltip';
 import 'react-calendar-heatmap/dist/styles.css'
+
 import './CalendarGraph.css'
+
 const CalendarGraph = (props) => {
     const startDate = props.checkpoint.startDate.slice(0, 10)
     const endDate = props.checkpoint.endDate.slice(0, 10)
@@ -23,7 +26,13 @@ const CalendarGraph = (props) => {
                         }
                         return `color-scale-${value.count}`;
                     }}
+                    tooltipDataAttrs={value => {
+                        return {
+                          'data-tip': `${value.date} has rating of ${value.count}. ${value.data ? 'Note: '+value.data : ''}`,
+                        };
+                      }}
                 />
+                <ReactTooltip />
             </div>
             <div id='star-background-wrapper'>
                 <div className='star-background-inner'>
