@@ -19,7 +19,8 @@ class MainPage extends Component{
                 checkpoint={this.props.checkpoints[this.props.currentCheckpoint]}
                 checkpointIdx={this.props.currentCheckpoint}
                 handleDeleteCheckpoint={this.props.handleDeleteCheckpoint}
-                refreshCheckpoints={this.props.refreshCheckpoints}/>
+                refreshCheckpoints={this.props.refreshCheckpoints}
+                setCheckpoint={this.props.setCheckpoint}/>
             :
             <Intropane />
         return (

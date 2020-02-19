@@ -29,10 +29,16 @@ class App extends Component {
     this.setState({currentCheckpoint: e.target.dataset.id})
   }
 
+  setCheckpoint = (num) => {
+    this.setState({currentCheckpoint: num})
+  }
+
   refreshCheckpoints = async () => {
+    let currentCheckpoint = this.state.currentCheckpoint
     const checkpoints = await checkpointAPI.getAll()
+    if (checkpoints.length >= currentCheckpoint) currentCheckpoint = 0
     if (checkpoints.length > 0) {
-      this.setState({ checkpoints: checkpoints, currentCheckpoint: this.state.currentCheckpoint || 0})
+      this.setState({ checkpoints: checkpoints, currentCheckpoint: currentCheckpoint || 0})
     } else (this.setState({checkpoints: checkpoints, currentCheckpoint: ''}))
   }
 
@@ -87,6 +93,7 @@ class App extends Component {
           checkpoints={this.state.checkpoints}
           refreshCheckpoints={this.refreshCheckpoints}
           navigateToCheckpoint={this.navigateToCheckpoint}
+          setCheckpoint={this.setCheckpoint}
         />
         } />
         <Route exact path='/' render={() => (<MainPage 
@@ -95,6 +102,7 @@ class App extends Component {
           currentCheckpoint={this.state.currentCheckpoint}
           handleDeleteCheckpoint={this.handleDeleteCheckpoint}
           refreshCheckpoints={this.refreshCheckpoints}
+          setCheckpoint={this.setCheckpoint}
           />
         )} />
           <Route exact path='/guide' render={() => (<GuidePage 

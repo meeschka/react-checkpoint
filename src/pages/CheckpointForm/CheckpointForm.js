@@ -82,12 +82,13 @@ class CheckpointForm extends Component {
         this.setState({isLoading: true})
         if (this.state.isNew) { 
             await checkpoint.create(formData)
-            await this.props.refreshCheckpoints()
         } else {
             await checkpoint.update(this.props.checkpoints[Math.abs(this.props.match.params.id)]._id, this.state.formData)
-            await this.props.refreshCheckpoints()
         }
         this.setState({isLoading: false})
+        await this.props.refreshCheckpoints()
+        this.props.setCheckpoint(0)
+        this.props.history.push('/')
     }
 
     addCategory = (e) => {

@@ -28,7 +28,7 @@ function deleteCheckpoint(checkpointId) {
     })
 }
 
-function getAll(userId) {
+function getAll() {
     return fetch(BASE_URL, {
         method: 'GET',
         headers: {

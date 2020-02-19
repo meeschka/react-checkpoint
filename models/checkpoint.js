@@ -67,10 +67,7 @@ const checkpointSchema = new Schema({
         required: true
     },
     theme: String,
-    reminders: {
-        type: Number,
-        default: -1,
-    },
+    reminders: Number,
     reminderType: String,
     nextReminder: Date,
     user: [{type: Schema.Types.ObjectId, ref: 'User'}],

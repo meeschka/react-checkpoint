@@ -54,15 +54,12 @@ class CheckpointView extends Component{
         this.props.handleDeleteCheckpoint()
     }
 
-    closeModalAndUpdate = () => {
-        //update daily progress
-    }
-
     render() {
-        const reminderStr = this.props.checkpoint.reminderType === "None" ?
-            'None'
-            :
-            `Every ${this.props.checkpoint.reminders} days by ${this.props.checkpoint.reminderType}`
+        const reminderStr = 'None'
+        if (this.props.checkpoint.reminderType && this.props.checkpoint.reminderType !== 'None'){
+            reminderStr = `Every ${this.props.checkpoint.reminders} days by ${this.props.checkpoint.reminderType}`
+        }
+        
         return (
             <div className='checkpoint-view-container'>
                 <h1>{this.props.checkpoint.name}</h1>
