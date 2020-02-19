@@ -4,10 +4,13 @@ const ChallengeForm = (props) => {
     let id = [props.categoryIdx, props.challengeIdx]
     let idStr = `${props.categoryIdx}-${props.challengeIdx}`
     return (
-        <div className="challenge-form" key={`goal-${props.categoryIdx}-${props.challengeIdx}`}>
-            <h5>{`Challenge ${props.challengeIdx+1}`}</h5>
-            <div className="form-group">
-                <label htmlFor={`challenge-${idStr}`}>Challenge</label>
+        <div className="challenge-form" key={`challenge-${idStr}`}>
+            <div className='challenge-header d-flex justify-content-between' key={`header-challenge-${idStr}`}>
+                <h5 key={`title-challenge-${idStr}`}>{`Challenge ${props.challengeIdx+1}`}</h5>
+                <button className='btn btn-danger' key={`remove-challenge-${idStr}`} onClick={props.removeChallenge(props.categoryIdx, props.challengeIdx)}>Remove Challenge</button>
+            </div>
+            <div className="form-group" key={`challenge-challenge-${idStr}`}>
+                <label htmlFor={`challenge-${idStr}`} key={`challenge-challenge-label-${idStr}`}>Challenge</label>
                 <input 
                     type="text"
                     required
@@ -18,10 +21,11 @@ const ChallengeForm = (props) => {
                     placeholder="What are you going to do?"
                     name={`challenge-${idStr}`}
                     value={props.challenge.challenge}
+                    key={`challenge-challenge-input-${idStr}`}
                 />
             </div>
-            <div className="form-group">
-                <label htmlFor={`num-${idStr}`}>Quantity</label>
+            <div className="form-group" key={`quantity-challenge-${idStr}`}>
+                <label htmlFor={`num-${idStr}`} key={`quantity-challenge-label-${idStr}`}>Quantity</label>
                 <input 
                     type="text"
                     required
@@ -32,6 +36,7 @@ const ChallengeForm = (props) => {
                     placeholder="How many times are you going to do it?"
                     name={`num-${idStr}`}
                     value={props.challenge.num}
+                    key={`quantity-challenge-input-${idStr}`}
                 />
             </div>
         </div>

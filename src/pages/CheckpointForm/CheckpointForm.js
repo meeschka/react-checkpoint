@@ -124,6 +124,33 @@ class CheckpointForm extends Component {
         this.setState({ formData })
     }
 
+    removeCategory = (e) => {
+        e.preventDefault()
+        const idx = e.target.dataset.id
+        let formData = JSON.parse(JSON.stringify(this.state.formData))
+        formData.categories = formData.categories.splice(idx, 1)
+        this.setState({ formData })
+    }
+
+    removeChallenge = (categoryIdx, challengeIdx) => {
+        return (e) => {
+            console.log(e)
+            e.preventDefault()
+            let formData = JSON.parse(JSON.stringify(this.state.formData))
+            formData.categories[categoryIdx].challenges.splice(challengeIdx, 1)
+            this.setState({ formData })
+        }
+    }
+
+    removeGoal = (categoryIdx, goalIdx) => {
+        return (e) => {
+            e.preventDefault()
+            let formData = JSON.parse(JSON.stringify(this.state.formData))
+            formData.categories[categoryIdx].goals.splice(goalIdx, 1)
+            this.setState({ formData })
+        }
+    }
+
     isFormInvalid = () => {
         return false;
     }
@@ -221,6 +248,9 @@ class CheckpointForm extends Component {
                             categories={this.state.formData.categories}
                             addChallenge={this.addChallenge}
                             addGoal={this.addGoal}
+                            removeCategory={this.removeCategory}
+                            removeChallenge={this.removeChallenge}
+                            removeGoal={this.removeGoal}
                         />
                        <div className="form-group">
                             <div className="checkpoint-form-btns">
