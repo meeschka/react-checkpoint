@@ -68,6 +68,7 @@ class SignupForm extends Component {
                   </div>
                 </form>
               </div>
+              <h5>Already have an account? Login <Link to='/login'>here</Link>.</h5>
             </div>
           );
     }

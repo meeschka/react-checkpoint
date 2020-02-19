@@ -29,12 +29,15 @@ class CheckpointForm extends Component {
                     challenges: [],
                     goals: []
                 }],
-                user:[this.props.user._id],
+                user:[this.props.user._id] || '',
             }
         }
     }
     async componentDidMount(){
         await this.props.refreshCheckpoints()
+        if (!this.props.user){
+            this.props.history.push('/login')
+        }
         let index = Math.abs(this.props.match.params.id)
             if (index < this.props.checkpoints.length){
                 this.setState({
@@ -159,7 +162,7 @@ class CheckpointForm extends Component {
     render() {
         return (
             <div className="new-checkpoint-page">
-                <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.navigateToCheckpoint}  />
+                <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.navigateToCheckpoint} user={this.props.user} />
                 <div className="checkpoint-container">
                     <h1>{this.state.isNew ? 'New Checkpoint' : 'Edit Checkpoint'}</h1>
                     <form className="checkpoint-form" onSubmit={this.handleSubmit} onChange={this.handleChange} >

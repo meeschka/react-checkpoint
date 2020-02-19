@@ -5,7 +5,11 @@ import './Sidepane.css'
 const Sidepane = (props) => {
     let options
     if (props.checkpoints.length === 0 ) {
-        options = <Link to='/form/100000'><h3>Create a checkpoint</h3></Link>
+        if (props.user){
+            options = <Link to='/form/100000'><h3>Create a checkpoint</h3></Link>
+        } else {
+            options = <Link to='/signup'><h3>Signup to get Started</h3></Link>
+        }
     } else {
         options = props.checkpoints.map((checkpoint, idx) => (
             <h3

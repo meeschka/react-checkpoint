@@ -51,6 +51,7 @@ class LoginPage extends Component{
                     </div>
                 </form>
             </div>
+            <h5>Don't have an account yet? Sign up <Link to='/signup'>here</Link>.</h5>
           </div>
         )
     }

@@ -25,7 +25,7 @@ class MainPage extends Component{
             <Intropane />
         return (
             <div className='d-flex mainpage-container'>
-                <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.selectCheckpoint} />
+                <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.selectCheckpoint} user={this.props.user} />
                 {mainView}
             </div>
         )

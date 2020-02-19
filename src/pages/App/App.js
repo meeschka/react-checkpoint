@@ -57,10 +57,12 @@ class App extends Component {
   //Auth methods
   handleSignupOrLogin = () => {
     this.setState({ user: userService.getUser()})
+    this.refreshCheckpoints()
   }
 
   handleLogout = () => {
     userService.logout()
+    this.setState({ checkpoints: [], currentCheckpoint: '' })
     this.setState({ user: null })
   }
 
@@ -94,6 +96,7 @@ class App extends Component {
           refreshCheckpoints={this.refreshCheckpoints}
           navigateToCheckpoint={this.navigateToCheckpoint}
           setCheckpoint={this.setCheckpoint}
+          user={this.state.user}
         />
         } />
         <Route exact path='/' render={() => (<MainPage 
@@ -103,13 +106,15 @@ class App extends Component {
           handleDeleteCheckpoint={this.handleDeleteCheckpoint}
           refreshCheckpoints={this.refreshCheckpoints}
           setCheckpoint={this.setCheckpoint}
+          user={this.state.user}
           />
         )} />
-          <Route exact path='/guide' render={() => (<GuidePage 
-            checkpoints={this.state.checkpoints}
-            navigateToCheckpoint={this.navigateToCheckpoint}
-            />
-          )} />
+        <Route exact path='/guide' render={() => (<GuidePage 
+          checkpoints={this.state.checkpoints}
+          navigateToCheckpoint={this.navigateToCheckpoint}
+          user={this.state.user}
+          />
+        )} />
       </Switch>
       </div>
     )
