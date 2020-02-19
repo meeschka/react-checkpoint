@@ -47,7 +47,7 @@ class ChallengeOverview extends Component {
         let challenges = this.props.challenges.map((challenge, challengeIdx) => (
             <div key={this.props.catId+'-'+challengeIdx} className='challengeOverview'>
                 <h5 key={this.props.catId+'-challenge-'+challengeIdx}>{challenge.challenge+' '+challenge.num+' times.'}</h5>
-                <h3>{`Current progress: ${challenge.results.length} / ${challenge.num}`}</h3>
+                <h4>{`Current progress: ${challenge.results.length} / ${challenge.num}`}</h4>
                 {challenge.results.length > 0
                 ?
                 <ul>
@@ -56,7 +56,9 @@ class ChallengeOverview extends Component {
                 :
                 ''
                 }
-                <button className='btn btn-success btn-lg' onClick={this.toggleChallengeModal(challengeIdx)}>Add progress</button>
+                <div className='d-flex justify-content-center'>
+                    <button className='btn btn-success btn-sm' onClick={this.toggleChallengeModal(challengeIdx)}>Add progress</button>
+                </div>
             </div>
         ))
         challenges.unshift(<h3 key={this.props.catId+'-challenges'}>Challenges</h3>)

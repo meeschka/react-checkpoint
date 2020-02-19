@@ -27,8 +27,9 @@ const CalendarGraph = (props) => {
                         return `color-scale-${value.count}`;
                     }}
                     tooltipDataAttrs={value => {
+                        let dataStr = `${value.date} has rating of ${value.count}. ${value.data ? 'Note: '+value.data : ''}`
                         return {
-                          'data-tip': `${value.date} has rating of ${value.count}. ${value.data ? 'Note: '+value.data : ''}`,
+                          'data-tip': `${value.date ? dataStr : 'No data for this date'}`,
                         };
                       }}
                 />

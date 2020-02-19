@@ -1,7 +1,23 @@
 .category-overview-el{
     width: 100%;
     padding: 20px 50px;
+    margin: 20px;
+    border: 5px solid green;
+    border-radius: 20px;
 }
-.category-overview-el:nth-child(even){
-    background-color: #D6E9D5;
+
+.category-overview-el h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.category-overview-el h5 {
+    padding: 10px 0;
+}
+.challenges-and-goals-container {
+    display: flex;
+}
+.little-goal-container {
+    width: 50%;
+    padding: 15px;
 }

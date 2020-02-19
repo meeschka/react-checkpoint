@@ -14,3 +14,7 @@
 .checkpoint-view-btns .btn {
     width: 30%
 }
+.category-view-container {
+    padding: 30px;
+    width: 90%;
+}
