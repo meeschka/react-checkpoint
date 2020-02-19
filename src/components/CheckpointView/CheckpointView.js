@@ -72,7 +72,7 @@ class CheckpointView extends Component{
                         {`Reminders: ${reminderStr}`}
                     </div>
                 </div>
-                <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} avgScores={this.state.avgScores} refreshCheckpoints={this.props.refreshCheckpoints} />
+                <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} avgScores={this.state.avgScores} />
                 <div className='checkpoint-view-btns'>
                     <button className='btn btn-success' onClick={this.toggleUpdateModal}>Add Daily Progress</button>
                     <Link to={`/form/${this.props.checkpointIdx}`} className='btn btn-primary'>Edit Checkpoint</Link>
@@ -88,16 +88,7 @@ class CheckpointView extends Component{
                     <button className='btn btn-danger' onClick={this.closeModalAndDelete}>Delete Checkpoint</button>
                 </Modal.Footer>
             </Modal>
-            <Modal show={this.state.updateModal} onHide={this.toggleUpdateModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Daily Progress</Modal.Title>
-                </Modal.Header>
-                <Modal.Body><DailyProgressForm checkpoint={this.props.checkpoint} toggleUpdateModal={this.toggleUpdateModal} /></Modal.Body>
-                <Modal.Footer>
-                    <button className='btn btn-primary' onClick={this.toggleUpdateModal}>Submit</button>
-                    <button className='btn btn-danger' onClick={this.toggleUpdateModal}>Cancel</button>
-                </Modal.Footer>
-            </Modal>
+            <DailyProgressForm refreshCheckpoints={this.props.refreshCheckpoints} updateModal={this.state.updateModal} toggleUpdateModal={this.toggleUpdateModal} checkpoint={this.props.checkpoint} getScores={this.getScores} />
             </div>
         )
     }

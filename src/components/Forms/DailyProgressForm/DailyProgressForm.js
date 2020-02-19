@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import StarRatings from 'react-star-ratings'
-
+import { Modal } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 import checkpoint from '../../../services/checkpoint-api'
 
@@ -14,17 +14,15 @@ class DailyProgressForm extends Component {
     }
     componentDidMount() {
         let progress = []
-        let today = new Date()
-        let currentMonth = ((today.getMonth()).toString()).padStart(2, '0')
-        let date = `${today.getFullYear()}-${currentMonth}-${today.getDate()}`
+        let today = new Date().toISOString().slice(0,10)
         for(let i=0; i<this.props.checkpoint.categories.length; i++){
             progress.push({
                 score: '0',
                 notes: '',
-                date: date
+                date: today
             })  
         }
-        this.setState({ dailyProgress: progress, date: `${today.getFullYear()}-${currentMonth}-${today.getDate()}` })
+        this.setState({ dailyProgress: progress, date: today })
     }
 
     changeStars = (newRating, name) => {
@@ -49,6 +47,9 @@ class DailyProgressForm extends Component {
         e.preventDefault()
         await checkpoint.addProgress(this.props.checkpoint._id, this.state.dailyProgress, this.state.date)
         this.props.toggleUpdateModal()
+        await this.props.refreshCheckpoints()
+        await this.props.getScores()
+        //update calendar data
     }
 
     render() {
@@ -82,24 +83,35 @@ class DailyProgressForm extends Component {
             
         ))
         return (
-            <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
-                <div className="daily-progress">
-                    <div className="form-group progress-date">
-                    <label htmlFor="date">Date</label>
-                        <input
-                            type="date"
-                            required
-                            className="form-control date"
-                            id="date"
-                            aria-describedby="progressDate"
-                            name="date"
-                            value={this.state.date}
-                        ></input>
-                    </div>
-                    {content}
-                    <input type="submit" />
-                </div>
-            </Form>
+
+            <Modal show={this.props.updateModal} onHide={this.props.toggleUpdateModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Daily Progress</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
+                        <div className="daily-progress">
+                            <div className="form-group progress-date">
+                            <label htmlFor="date">Date</label>
+                                <input
+                                    type="date"
+                                    required
+                                    className="form-control date"
+                                    id="date"
+                                    aria-describedby="progressDate"
+                                    name="date"
+                                    value={this.state.date}
+                                ></input>
+                            </div>
+                            { content }
+                        </div>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className='btn btn-primary' onClick={this.handleSubmit}>Submit</button>
+                    <button className='btn btn-danger' onClick={this.props.toggleUpdateModal}>Cancel</button>
+                </Modal.Footer>
+            </Modal>
         )
     }
 }
