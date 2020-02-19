@@ -76,7 +76,7 @@ class CheckpointView extends Component{
                         {`Reminders: ${reminderStr}`}
                     </div>
                 </div>
-                <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} />
+                <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} avgScores={this.state.avgScores} />
                 <div className='checkpoint-view-btns'>
                     <button className='btn btn-success' onClick={this.toggleUpdateModal}>Add Daily Progress</button>
                     <Link to={`/form/${this.props.checkpointIdx}`} className='btn btn-primary'>Edit Checkpoint</Link>

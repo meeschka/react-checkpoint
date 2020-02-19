@@ -1,3 +1,48 @@
+.react-calendar-heatmap .color-scale-1 { fill: #d6e685; }
+.react-calendar-heatmap .color-scale-2 { fill: #8cc665; }
+.react-calendar-heatmap .color-scale-3 { fill: #44a340; }
+.react-calendar-heatmap .color-scale-4 { fill: #1e6823; }
+
+.data-container-one-month {
+    width: 100px;
+}
+.data-container-two-months {
+    width: 200px;
+}
+.data-container-three-months {
+    width: 300px;
+}
+.data-container-four-months {
+    width: 400px;
+}
+.data-container-five-months {
+    width: 500px;
+}
 .data-container {
-    height: 150px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+#star-background-wrapper {
+    width: 150px;
+    text-align: center;
+    position: relative;
+}
+.star-background-inner {
+    position: relative;
+    z-index: 2;
+}
+#star-background-wrapper:after {
+    z-index: 1;
+    content: '\f005';
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-weight: normal;
+    position: absolute;
+    color: lightgrey;
+    font-size: 150px;
+    top: 50%;
+    left: 50%;
+    margin: -120px 0 0 -80px;
 }

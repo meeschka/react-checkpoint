@@ -26,8 +26,9 @@ function processDataForCalendars(checkpoint) {
         for (let j=0; j<checkpoint.categories[i].scores.length; j++) {
             let date = checkpoint.categories[i].scores[j].date.split('T')[0]
             tempArr.push({
-                day: date,
-                value: checkpoint.categories[i].scores[j].score
+                date: date,
+                count: checkpoint.categories[i].scores[j].score,
+                data: checkpoint.categories[i].scores[j].notes
             })
         }
         data.push(tempArr)

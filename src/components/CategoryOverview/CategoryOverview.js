@@ -17,6 +17,7 @@ class CategoryOverview extends Component {
         return (
             this.props.categories.map((category, idx) => {
                 let catId = `cat-${idx}`
+
                 return (
                     <div key={catId} className='category-overview-el'>
                         <h2>{category.categoryName}</h2>
@@ -30,8 +31,8 @@ class CategoryOverview extends Component {
                             <ChallengeOverview challenges={category.challenges} catId={catId} key={catId+'-challenges'}/>
                             :
                             <p key={catId+'-challenges'}>No challenges set for {category.categoryName} for this checkpoint</p>}
-                        {category.scores.length > 0 ? 
-                            <CalendarGraph checkpoint={this.props.checkpoint} data={this.props.calendarData[idx]} />
+                        {this.props.calendarData.length > 0 ? 
+                            <CalendarGraph checkpoint={this.props.checkpoint} data={this.props.calendarData[idx]} avgScore={this.props.avgScores[idx] || 0} />
                             :
                             <NoScores />
                         }
