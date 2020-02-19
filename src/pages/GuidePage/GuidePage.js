@@ -4,7 +4,7 @@ import './GuidePage.css'
 
 const GuidePage = (props) => (
     <div className='d-flex'>
-        <Sidepane checkpoints={props.checkpoints} selectCheckpoint={props.selectCheckpoint} />
+        <Sidepane checkpoints={props.checkpoints} selectCheckpoint={props.navigateToCheckpoint} />
         <div className='guide-page-content'>
             <h1>The Checkpoint Guide to Success</h1>
             <h3>Why Checkpoint?</h3>

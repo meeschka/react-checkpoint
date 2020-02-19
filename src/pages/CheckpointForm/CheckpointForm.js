@@ -82,11 +82,12 @@ class CheckpointForm extends Component {
         this.setState({isLoading: true})
         if (this.state.isNew) { 
             await checkpoint.create(formData)
+            await this.props.refreshCheckpoints()
         } else {
             await checkpoint.update(this.props.checkpoints[Math.abs(this.props.match.params.id)]._id, this.state.formData)
+            await this.props.refreshCheckpoints()
         }
         this.setState({isLoading: false})
-        this.props.history.push('/')
     }
 
     addCategory = (e) => {
@@ -130,7 +131,7 @@ class CheckpointForm extends Component {
     render() {
         return (
             <div className="new-checkpoint-page">
-                <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.selectCheckpoint} />
+                <Sidepane checkpoints={this.props.checkpoints} selectCheckpoint={this.props.navigateToCheckpoint}  />
                 <div className="checkpoint-container">
                     <h1>{this.state.isNew ? 'New Checkpoint' : 'Edit Checkpoint'}</h1>
                     <form className="checkpoint-form" onSubmit={this.handleSubmit} onChange={this.handleChange} >

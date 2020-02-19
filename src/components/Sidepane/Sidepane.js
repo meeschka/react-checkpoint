@@ -15,6 +15,7 @@ const Sidepane = (props) => {
             >{checkpoint.name}</h3>
         ))
     }
+
     return (
         <div className='sidepane'>
            {options}

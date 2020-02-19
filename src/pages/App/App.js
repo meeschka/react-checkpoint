@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
 // import logo from '../../checkpoint.svg';
 import './App.css';
-
+import { withRouter } from "react-router";
 import userService from '../../utils/userService'
 import checkpointAPI from '../../services/checkpoint-api'
 
@@ -34,6 +34,13 @@ class App extends Component {
     if (checkpoints.length > 0) {
       this.setState({ checkpoints: checkpoints, currentCheckpoint: this.state.currentCheckpoint || 0})
     } else (this.setState({checkpoints: checkpoints, currentCheckpoint: ''}))
+  }
+
+  navigateToCheckpoint = async (e) => {
+    await this.selectCheckpoint(e)
+    await this.refreshCheckpoints()
+    const { history } = this.props;
+    history.push('/')
   }
 
   handleDeleteCheckpoint = async () => {
@@ -78,8 +85,8 @@ class App extends Component {
           {...props}
           user={this.state.user}
           checkpoints={this.state.checkpoints}
-          selectCheckpoint={this.selectCheckpoint}
           refreshCheckpoints={this.refreshCheckpoints}
+          navigateToCheckpoint={this.navigateToCheckpoint}
         />
         } />
         <Route exact path='/' render={() => (<MainPage 
@@ -92,7 +99,7 @@ class App extends Component {
         )} />
           <Route exact path='/guide' render={() => (<GuidePage 
             checkpoints={this.state.checkpoints}
-            selectCheckpoint={this.selectCheckpoint}
+            navigateToCheckpoint={this.navigateToCheckpoint}
             />
           )} />
       </Switch>
