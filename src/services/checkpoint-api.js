@@ -62,8 +62,6 @@ function addProgress(checkpointId, progressData, progressDate) {
     for (let i = 0; i < progressData.length; i++) {
         formattedData[i] = {...progressData[i], date: progressDate}
     }
-    console.log(formattedData)
-    console.log('hit the checkpoint api')
     return fetch(`${BASE_URL}/${checkpointId}/addProgress`, {
         method: 'POST',
         headers: {
@@ -78,10 +76,26 @@ function addProgress(checkpointId, progressData, progressDate) {
     })
 }
 
+function addChallengeResult(data){
+    return fetch(`${BASE_URL}/${data.checkpointId}/challenge`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer '+ tokenService.getToken()
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        if (res.ok) return res.json()
+        throw new Error('Checkpoint could not be updated')
+    })
+}
+
 export default {
     create,
     deleteCheckpoint,
     getAll,
     update,
-    addProgress
+    addProgress,
+    addChallengeResult
 }

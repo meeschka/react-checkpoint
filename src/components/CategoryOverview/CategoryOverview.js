@@ -28,7 +28,7 @@ class CategoryOverview extends Component {
                             : 
                             <p key={catId+'-goals'}>No goals set for {category.categoryName} for this checkpoint</p>}
                         {category.challenges.length > 0 ?
-                            <ChallengeOverview challenges={category.challenges} catId={catId} key={catId+'-challenges'}/>
+                            <ChallengeOverview challenges={category.challenges} catId={idx} checkpointId={this.props.checkpoint._id} key={'cat-'+idx+'-challenges'} refreshCheckpoints={this.props.refreshCheckpoints}/>
                             :
                             <p key={catId+'-challenges'}>No challenges set for {category.categoryName} for this checkpoint</p>}
                         {this.props.calendarData.length > 0 ? 

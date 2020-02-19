@@ -36,7 +36,6 @@ class CheckpointView extends Component{
             avgScores: results.categoryAvg,
             calendarData: calendarData
         })
-        console.log(this.state)
     }
 
     toggleDeleteModal = () => {
@@ -73,7 +72,7 @@ class CheckpointView extends Component{
                         {`Reminders: ${reminderStr}`}
                     </div>
                 </div>
-                <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} avgScores={this.state.avgScores} />
+                <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} avgScores={this.state.avgScores} refreshCheckpoints={this.props.refreshCheckpoints} />
                 <div className='checkpoint-view-btns'>
                     <button className='btn btn-success' onClick={this.toggleUpdateModal}>Add Daily Progress</button>
                     <Link to={`/form/${this.props.checkpointIdx}`} className='btn btn-primary'>Edit Checkpoint</Link>

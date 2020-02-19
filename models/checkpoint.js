@@ -7,7 +7,6 @@ const resultSchema = new Schema({
         required: true
     },
     date: Date,
-    note: String
 })
 
 const goalSchema = new Schema({

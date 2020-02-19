@@ -14,7 +14,7 @@ const CalendarGraph = (props) => {
     const containerClass = widthClasses[Math.floor(timePeriod/32)] || 'data-container-five-months'
     const avgStars = props.avgScore || 0
     return (
-        <div class='data-container'>
+        <div className='data-container'>
             <div className={containerClass}>
                 <CalendarHeatmap
                     startDate = { startDate }

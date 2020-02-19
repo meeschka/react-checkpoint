@@ -1,6 +1,22 @@
 const User = require('../models/user')
 const Checkpoint = require('../models/checkpoint')
 
+async function challengeResult(req, res) {
+    try {
+        Checkpoint.findById(req.params.id)
+        .then(checkpoint => {
+            checkpoint.categories[req.body.categoryId].challenges[req.body.challengeId].results.set(checkpoint.categories[req.body.categoryId].challenges[req.body.challengeId].results.length, req.body.formData)
+            checkpoint.save(function(err, checkpoint) {
+                if (err) res.status(400).json({message: err})
+                res.status(200).json(checkpoint)
+            })
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({message: err})
+    }
+}
+
 async function create(req, res) {
     try {
         const checkpoint = await Checkpoint.create(req.body)
@@ -42,5 +58,6 @@ module.exports = {
     create,
     delete: deleteCheckpoint,
     index,
-    update
+    update,
+    challengeResult
 }
