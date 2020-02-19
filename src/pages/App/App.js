@@ -9,6 +9,7 @@ import checkpointAPI from '../../services/checkpoint-api'
 import SignupPage from '../SignupPage/SignupPage'
 import LoginPage from '../LoginPage/LoginPage'
 import MainPage from '../MainPage/MainPage'
+import GuidePage from '../GuidePage/GuidePage'
 import CheckpointForm from '../CheckpointForm/CheckpointForm'
 import NavBar from '../../components/Navbar/Navbar'
 
@@ -88,6 +89,11 @@ class App extends Component {
           handleDeleteCheckpoint={this.handleDeleteCheckpoint}
           refreshCheckpoints={this.refreshCheckpoints}
           />
+        )} />
+          <Route exact path='/guide' render={() => (<GuidePage 
+            checkpoints={this.state.checkpoints}
+            selectCheckpoint={this.selectCheckpoint}
+            />
           )} />
       </Switch>
       </div>

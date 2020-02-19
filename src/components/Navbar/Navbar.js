@@ -6,10 +6,12 @@ const NavBar = (props) => {
         <Nav className="ml-auto">
             <Nav.Link href="/form/100000">Add New Checkpoint</Nav.Link>
             <Nav.Link href="#link">Add Daily Progress</Nav.Link>
+            <Nav.Link href="/guide">Guide</Nav.Link>
             <Nav.Link href="" onClick={ props.handleLogout }>Logout</Nav.Link>
         </Nav>
         :
         <Nav className="ml-auto">
+            <Nav.Link href="/guide">Guide</Nav.Link>
             <Nav.Link href="/login">Login</Nav.Link>
             <Nav.Link href="/signup">Signup</Nav.Link>
         </Nav>

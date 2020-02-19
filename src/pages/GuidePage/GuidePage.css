@@ -1,0 +1,8 @@
+.guide-page-content {
+    width: 70%;
+    margin: 20px auto;
+}
+.guide-page-content h1, .guide-page-content h3 {
+    text-align: center;
+    margin: 15px auto;
+}

@@ -4,7 +4,7 @@ import './NoScores.css'
 const NoScores = (props) => {
     return (
         <div className='no-scores-div'>
-            <i className="far fa-star icon-4x"></i>
+            <h3>You have no scores - why not add some?</h3>
         </div>
     )
     
