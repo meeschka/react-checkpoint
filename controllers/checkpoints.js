@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const Checkpoint = require('../models/checkpoint')
+const EmailReminder = require('../models/emailreminder')
 
 async function challengeResult(req, res) {
     try {
@@ -20,6 +21,20 @@ async function challengeResult(req, res) {
 async function create(req, res) {
     try {
         const checkpoint = await Checkpoint.create(req.body)
+        //get array of dates for reminders
+        if(req.body.reminderType === 'Email') {
+            const startDate = new Date(req.body.startDate).getTime()
+            const endDate = new Date(req.body.endDate).getTime()
+            let time = startDate;
+            while (time < endDate){
+                time += 1000*60*60*24*7
+                await EmailReminder.create({
+                    datetime: time,
+                    email: req.user.email,
+                    checkpoint: checkpoint._id
+                })
+            }
+        }
         res.status(201).json(checkpoint)
     } catch (err) {
         console.log(err)
@@ -30,6 +45,10 @@ async function create(req, res) {
 async function deleteCheckpoint(req, res) {
     try {
         const deletedCheckpoint = await Checkpoint.findByIdAndDelete(req.params.id)
+        //delete any reminders associated with that checkpoint
+        await EmailReminder.deleteMany({ checkpoint: req.params.id, function (err) {
+            res.status(400).json({message: 'err'})
+        } })
         res.status(200).json(deletedCheckpoint)
     } catch (err) {
         res.status(400).json({message: 'err'})

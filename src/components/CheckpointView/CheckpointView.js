@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import dataService from '../../utils/dataService'
-
+import EmailJS from '../EmailJS/EmailJS'
 import CategoryOverview from '../CategoryOverview/CategoryOverview'
 import './CheckpointView.css'
 
@@ -91,6 +91,7 @@ class CheckpointView extends Component{
                 </Modal.Footer>
             </Modal>
             <DailyProgressForm refreshCheckpoints={this.props.refreshCheckpoints} updateModal={this.state.updateModal} toggleUpdateModal={this.toggleUpdateModal} checkpoint={this.props.checkpoint} getScores={this.getScores} />
+            <EmailJS />
             </div>
         )
     }
