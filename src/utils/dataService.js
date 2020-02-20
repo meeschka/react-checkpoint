@@ -5,6 +5,7 @@ function getAverages(checkpoint) {
         totalAvg: '',
         categoryAvg: []
     }
+    let totalAvgArr = []
     for (let i=0; i< checkpoint.categories.length; i++){
         let tempArr = []
         for (let j=0; j<checkpoint.categories[i].scores.length; j++){
@@ -12,8 +13,10 @@ function getAverages(checkpoint) {
         }
         let categoryAvg = (tempArr.reduce((a,b) => a + b, 0)) / tempArr.length || 0
         results.categoryAvg.push(categoryAvg)
+        totalAvgArr.push(categoryAvg)
     }
-    results.totalAvg = (results.categoryAvg.reduce((a, b) => a + b, 0) / results.categoryAvg.length) || 0
+    results.totalAvg = (totalAvgArr.reduce((a, b) => a + b, 0) / totalAvgArr.length) || 0
+    results.totalAvg = Math.floor(results.totalAvg * 10)/10
     return results
 }
 
@@ -45,12 +48,12 @@ function processDataForRadar(checkpoint) {
     for (let i=0; i<checkpoint.categories.length; i++){
         let obj = {}
         obj.category = checkpoint.categories[i].categoryName
-        obj[checkpoint.categories[i].categoryName] = averages.categoryAvg[i]
+        obj[checkpoint.name] = averages.categoryAvg[i]
         arr.push(obj)
     }
     return({
         arr: arr,
-        keys: checkpoint.name,
+        keys: [checkpoint.name],
         indexBy: 'category'
     })
     

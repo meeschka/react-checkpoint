@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import dataService from '../../utils/dataService'
 import CategoryOverview from '../CategoryOverview/CategoryOverview'
 import './CheckpointView.css'
+import RadarGraph from '../Graphs/RadarGraph/RadarGraph'
 
 import DailyProgressForm from '../Forms/DailyProgressForm/DailyProgressForm'
 
@@ -15,7 +16,8 @@ class CheckpointView extends Component{
             updateModal: false,
             avgScore: '',
             avgScores: [],
-            calendarData: []
+            calendarData: [],
+            radarData: []
         }
     }
 
@@ -27,14 +29,18 @@ class CheckpointView extends Component{
             this.getScores()
         }
     }
-    getScores = () => {
-        let results = dataService.getAverages(this.props.checkpoint)
-        let calendarData = dataService.processDataForCalendars(this.props.checkpoint)
+    getScores = async () => {
+        let results = await dataService.getAverages(this.props.checkpoint)
+        let calendarData = await dataService.processDataForCalendars(this.props.checkpoint)
+        let radarData = await dataService.processDataForRadar(this.props.checkpoint)
+        console.log(radarData)
         this.setState({
             avgScore: results.totalAvg,
             avgScores: results.categoryAvg,
-            calendarData: calendarData
+            calendarData: calendarData,
+            radarData: [radarData]
         })
+        console.log(this.state)
     }
 
     toggleDeleteModal = () => {
@@ -71,6 +77,7 @@ class CheckpointView extends Component{
                         {`Reminders: ${reminderStr}`}
                     </div>
                 </div>
+                {this.state.radarData.length > 0 ? <RadarGraph radarData={this.state.radarData} /> : ''}
                 <div className='category-view-container' >
                     <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} avgScores={this.state.avgScores} />
                 </div>
