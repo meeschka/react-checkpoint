@@ -94,7 +94,7 @@ async function update(req, res) {
                     await PhoneReminder.create({
                         datetime: time,
                         phoneNum: req.body.reminderNum,
-                        checkpoint: checkpoint._id
+                        checkpoint: oldCheckpoint._id
                     })
                 } 
             }
