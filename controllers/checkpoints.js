@@ -6,9 +6,10 @@ async function challengeResult(req, res) {
     try {
         Checkpoint.findById(req.params.id)
         .then(checkpoint => {
+            if (checkpoint.user[0].toString === req.user._id.toString()) res.status(404).json({message: 'Not authorized'})
             checkpoint.categories[req.body.categoryId].challenges[req.body.challengeId].results.set(checkpoint.categories[req.body.categoryId].challenges[req.body.challengeId].results.length, req.body.formData)
             checkpoint.save(function(err, checkpoint) {
-                if (err) res.status(400).json({message: err})
+                if (err) throw('Database error')
                 res.status(200).json(checkpoint)
             })
         })
@@ -23,15 +24,14 @@ async function create(req, res) {
         const checkpoint = await Checkpoint.create(req.body)
         //get array of dates for reminders, then create those reminder objects
         if(req.body.reminderType === 'Text') {
-            console.log('yep, text')
-            console.log(req.body.reminderNum)
-            const startDate = new Date(req.body.startDate).getTime()
+            let startDate = new Date(req.body.startDate).getTime()
+            const now = new Date().getTime()
+            startDate = startDate > now ? startDate : now
             const endDate = new Date(req.body.endDate).getTime()
             let time = startDate;
             while (time < endDate){
                 time += 1000*60*60*24*7
                 if (req.body.reminderNum) {
-                    console.log(checkpoint._id)
                     await PhoneReminder.create({
                         datetime: time,
                         phoneNum: req.body.reminderNum,
@@ -73,9 +73,37 @@ async function index(req, res) {
 
 async function update(req, res) {
     try {
+        //if changed to no reminders, remove from reminder queue. If text reminders added, add reminders to queue
+        const oldCheckpoint = await Checkpoint.findById(req.params.id)
+        if (oldCheckpoint.user[0].toString === req.user._id.toString()) {
+            throw('Not authorized')
+        }
+        if (req.body.reminderType === 'None' && oldCheckpoint.reminderType === 'Text') {
+            await PhoneReminder.deleteMany({ checkpoint: req.params.id, function (err) {
+                if (err) throw('Database error')
+            } })
+        } else if (req.body.reminderType === 'Text' && oldCheckpoint.reminderType === 'None') {
+            let startDate = new Date(req.body.startDate).getTime()
+            const now = new Date().getTime()
+            startDate = startDate > now ? startDate : now
+            const endDate = new Date(req.body.endDate).getTime()
+            let time = startDate;
+            while (time < endDate){
+                time += 1000*60*60*24*7
+                if (req.body.reminderNum) {
+                    await PhoneReminder.create({
+                        datetime: time,
+                        phoneNum: req.body.reminderNum,
+                        checkpoint: checkpoint._id
+                    })
+                } 
+            }
+        }
+        //update checkpoint
         const updatedCheckpoint = await Checkpoint.findByIdAndUpdate(req.params.id, req.body, {new: true})
         res.status(200).json(updatedCheckpoint)
     } catch (err) {
+        console.log(err)
         res.status(400).json({message: err})
     }
 }

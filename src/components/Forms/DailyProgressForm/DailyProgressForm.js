@@ -47,9 +47,12 @@ class DailyProgressForm extends Component {
         e.preventDefault()
         await checkpoint.addProgress(this.props.checkpoint._id, this.state.dailyProgress, this.state.date)
         this.props.toggleUpdateModal()
+        this.setState({
+            dailyProgress: [],
+            date: ''
+        })
         await this.props.refreshCheckpoints()
         await this.props.getScores()
-        //update calendar data
     }
 
     render() {

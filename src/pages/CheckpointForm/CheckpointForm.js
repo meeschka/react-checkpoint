@@ -189,9 +189,9 @@ class CheckpointForm extends Component {
     }
 
     processNumbers = () => {
-        let number = this.state.formData.reminderNum
+        let number = this.state.formData.reminderNum || 0
         let newNumber = number.toString().replace(/\D/g,'')
-        if (newNumber.length === 11 && newNumber[0] === 1) {
+        if (newNumber.length === 11) {
             return newNumber
         } else if (newNumber.length === 10) {
             return ("1".concat(newNumber))
@@ -299,8 +299,8 @@ class CheckpointForm extends Component {
                                     <select
                                         className="form-control"
                                         id="reminderTypeInput"
-                                        name="reminderType">
-                                        value={this.state.formData.reminderType}
+                                        name="reminderType"
+                                        value={this.state.formData.reminderType}>
                                         <option value="None">None</option>
                                         <option value="Text">Text</option>
                                     </select>
