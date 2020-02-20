@@ -51,6 +51,7 @@ class LoginPage extends Component{
                     </div>
                 </form>
             </div>
+            {this.state.message ? <h5>{this.state.message}</h5> : ''}
             <h5>Don't have an account yet? Sign up <Link to='/signup'>here</Link>.</h5>
           </div>
         )

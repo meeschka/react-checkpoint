@@ -26,7 +26,7 @@ class SignupForm extends Component {
             this.props.handleSignupOrLogin()
             this.props.history.push('/')
         } catch (err) {
-            this.props.updateMessage(err.message)
+            this.props.updateMessage('Email is already in the system, please try again')
         }
     }
 
