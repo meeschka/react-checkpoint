@@ -13,7 +13,6 @@ class CheckpointForm extends Component {
         super(props);
         this.state={
             isNew: Math.abs(this.props.match.params.id) < this.props.checkpoints.length ? false : true,
-            invalidForm: false,
             isLoading: false,
             formData: {
                 name: '',
@@ -83,17 +82,23 @@ class CheckpointForm extends Component {
     
     handleSubmit = async (e) => {
         e.preventDefault()
-        let formData = this.state.formData
-        this.setState({isLoading: true})
-        if (this.state.isNew) { 
-            await checkpoint.create(formData)
+        if (this.isFormInvalid) {
+            let formData = this.state.formData
+            formData.reminderNum = this.processNumbers()
+            this.setState({isLoading: true})
+            if (this.state.isNew) { 
+                await checkpoint.create(formData)
+            } else {
+                await checkpoint.update(this.props.checkpoints[Math.abs(this.props.match.params.id)]._id, this.state.formData)
+            }
+            this.setState({isLoading: false})
+            await this.props.refreshCheckpoints()
+            this.props.setCheckpoint(0)
+            this.props.history.push('/')
         } else {
-            await checkpoint.update(this.props.checkpoints[Math.abs(this.props.match.params.id)]._id, this.state.formData)
+            alert('Please fill in all required fields')
         }
-        this.setState({isLoading: false})
-        await this.props.refreshCheckpoints()
-        this.props.setCheckpoint(0)
-        this.props.history.push('/')
+        
     }
 
     addCategory = (e) => {
@@ -183,6 +188,17 @@ class CheckpointForm extends Component {
         this.setState({ formData })
     }
 
+    processNumbers = () => {
+        let number = this.state.formData.reminderNum
+        let newNumber = number.toString().replace(/\D/g,'')
+        if (newNumber.length === 11 && newNumber[0] === 1) {
+            return newNumber
+        } else if (newNumber.length === 10) {
+            return ("1".concat(newNumber))
+        }
+        else return(null)
+    }
+
     removeCategory = (e) => {
         e.preventDefault()
         const idx = e.target.dataset.id
@@ -211,7 +227,8 @@ class CheckpointForm extends Component {
     }
 
     isFormInvalid = () => {
-        return false;
+        let phoneNum = this.state.formData.reminderType === 'Text' ? this.processNumbers() : true
+        return !(this.state.formData.name && this.state.formData.startDate && this.state.formData.endDate && this.state.formData.categories[0].categoryName && phoneNum);
     }
     //only allow logged in users to access form, submit form, etc.
 
@@ -289,16 +306,17 @@ class CheckpointForm extends Component {
                                     </select>
                                 </div>
                                 <div className={this.state.formData.reminderType === 'Text' ? "form-group col-md-6" : "form-group col-md-6 hidden"}>
-                                    <label htmlFor="reminderFrequencyInput">Phone Number for Text Reminders</label>
+                                    <label htmlFor="reminder-phone-number-label">Phone Number for Text Reminders</label>
                                     <input 
                                         type="text"
                                         className="form-control"
-                                        id="reminderInput"
-                                        aria-describedby="reminderFrequencyInput"
+                                        id="reminderPhoneInput"
+                                        aria-describedby="reminderPhoneInput"
                                         name='reminderNum'
                                         value={this.state.formData.reminderNum}
                                         placeholder='Required for text reminders'
                                     ></input>
+                                    <small id="phoneNumberHelp" className="form-text text-muted">Only valid for North American phone numbers.</small>
                                 </div>
                             </div>
                             <h4>Checkpoint Categories</h4>
@@ -313,11 +331,15 @@ class CheckpointForm extends Component {
                             removeGoal={this.removeGoal}
                         />
                        <div className="form-group">
+                           {this.state.isLoading ? 
+                           <div>Is loading...</div>
+                            :
                             <div className="checkpoint-form-btns">
                                 <button className="btn btn-primary" onClick={this.addCategory}>Add a Category</button>
                                 <button className="btn btn-success" disabled={this.isFormInvalid()} onClick={this.handleSubmit}>{this.state.isNew? "Create Checkpoint" : "Edit Checkpoint"}</button>
                                 <Link to='/' className="btn btn-danger">Cancel</Link>
                             </div>
+                            }
                         </div> 
                     </form>
                 </div>

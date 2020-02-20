@@ -7,7 +7,7 @@ async function sendNotifications() {
     const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     const now = new Date().getTime()
     let phoneList = []
-    await PhoneReminder.find({ datetime: { $gte: now}}, function(err, reminders){
+    await PhoneReminder.find({ datetime: { $lte: now}}, function(err, reminders){
         if (err) {
             console.log(err)
             mongoose.connection.close()
