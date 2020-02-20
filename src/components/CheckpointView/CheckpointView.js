@@ -58,12 +58,19 @@ class CheckpointView extends Component{
         this.props.handleDeleteCheckpoint()
     }
 
+    formatDates = (date) => {
+        return (new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }))
+    }
+    formatPhoneNum = (num) => {
+        let numStr = num.toString()
+        return (`+1 (${numStr.slice(1,4)}) ${numStr.slice(4,7)}-${numStr.slice(7,11)}`)
+    }
+
     render() {
         let reminderStr = 'None'
         if (this.props.checkpoint.reminderType === 'Text'){
-            reminderStr = `Send text reminders to ${this.props.checkpoint.reminderNum}`
+            reminderStr = `Send text reminders to ${this.formatPhoneNum(this.props.checkpoint.reminderNum)}`
         }
-        
         return (
             <div className='checkpoint-view-container'>
                 <h1>{this.props.checkpoint.name}</h1>
@@ -71,7 +78,7 @@ class CheckpointView extends Component{
                 <h3>{this.state.avgScore ? `Average score is ${this.state.avgScore} / 5` : `No daily progress entered so far`}</h3>
                 <div className='d-flex justify-content-between w-75 mb-3'>
                     <div>
-                        {`From ${this.props.checkpoint.startDate.slice(0, 10)} to ${this.props.checkpoint.endDate.slice(0, 10)}`}
+                        {`From ${this.formatDates(this.props.checkpoint.startDate)} to ${this.formatDates(this.props.checkpoint.endDate)}`}
                     </div>
                     <div>
                         {`Reminders: ${reminderStr}`}
