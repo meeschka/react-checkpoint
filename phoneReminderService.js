@@ -1,23 +1,29 @@
 const PhoneReminder = require('./models/phonereminder')
+const mongoose = require('mongoose')
 require('dotenv').config();
+require('./config/database');
 
-function sendNotifications() {
+async function sendNotifications() {
     const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     const now = new Date().getTime()
     let phoneList = []
-    PhoneReminder.find({ datetime: { $lte: now}}, function(err, reminders){
-        if (err) {console.log(err)} else {
+    await PhoneReminder.find({ datetime: { $gte: now}}, function(err, reminders){
+        if (err) {
+            console.log(err)
+            mongoose.connection.close()
+        } else {
             reminders.forEach(reminder => {
                 phoneList.push(reminder.phoneNum)
             })
             PhoneReminder.deleteMany({ datetime: {$lte: now}}, function(err){
                 console.log(err)
+                console.log(phoneList)
+                mongoose.connection.close()
             })
         }
     })
-    console.log(phoneList)
-    phoneList = [16474548976]
     phoneList.forEach(function(phoneNum) {
+        console.log('phone list')
         const options = {
             to: `+${phoneNum}`,
             from: process.env.TWILIO_PHONE_NUMBER,

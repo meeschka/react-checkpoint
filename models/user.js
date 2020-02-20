@@ -18,7 +18,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    phoneNumber: String,
     tone: {
         type: Number,
         default: 0

@@ -26,7 +26,7 @@ class Intropane extends Component {
                         <h3>Watch your success grow as you take control of your life</h3>
                     </div>
                 </div>
-                <Link to='/new' className='btn btn-primary btn-lg intro-btn'>Get started now!</Link>
+                <Link to='/form/1000000 ' className='btn btn-primary btn-lg intro-btn'>Get started now!</Link>
             </div>
         )
     }

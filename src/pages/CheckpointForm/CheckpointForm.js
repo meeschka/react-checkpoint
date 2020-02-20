@@ -20,7 +20,7 @@ class CheckpointForm extends Component {
                 startDate: '',
                 endDate: '',
                 theme: '',
-                reminders: '',
+                reminderNum: '',
                 reminderType: 'None',
                 categories: [{
                     categoryName: '',
@@ -50,7 +50,7 @@ class CheckpointForm extends Component {
                         startDate: startDate,
                         endDate: endDate,
                         theme: this.props.checkpoints[index].theme,
-                        reminders: this.props.checkpoints[index].reminders,
+                        reminderNum: this.props.checkpoints[index].reminderNum,
                         reminderType: this.props.checkpoints[index].reminderType,
                         categories: this.props.checkpoints[index].categories,
                         user:[this.props.user._id],
@@ -84,7 +84,6 @@ class CheckpointForm extends Component {
     handleSubmit = async (e) => {
         e.preventDefault()
         let formData = this.state.formData
-        formData.reminderType = formData.reimderType || "None"
         this.setState({isLoading: true})
         if (this.state.isNew) { 
             await checkpoint.create(formData)
@@ -140,7 +139,7 @@ class CheckpointForm extends Component {
             startDate: formattedToday,
             endDate: formattedThreeMonths,
             theme: '',
-            reminders: '',
+            reminderNum: '',
             reminderType: 'None',
             categories: [{
                 categoryName: 'Health',
@@ -277,7 +276,7 @@ class CheckpointForm extends Component {
                                     value={this.state.formData.theme}
                                 ></input>
                             </div>
-                            <div className="form-row">
+                            <div className="form-row reminder-row">
                                 <div className="form-group col-md-6">
                                     <label htmlFor="reminderType">Reminders</label>
                                     <select
@@ -286,19 +285,19 @@ class CheckpointForm extends Component {
                                         name="reminderType">
                                         value={this.state.formData.reminderType}
                                         <option value="None">None</option>
-                                        <option value="Email">Email</option>
                                         <option value="Text">Text</option>
                                     </select>
                                 </div>
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="reminderFrequencyInput">Reminder Frequency (days)</label>
+                                <div className={this.state.formData.reminderType === 'Text' ? "form-group col-md-6" : "form-group col-md-6 hidden"}>
+                                    <label htmlFor="reminderFrequencyInput">Phone Number for Text Reminders</label>
                                     <input 
                                         type="text"
                                         className="form-control"
                                         id="reminderInput"
                                         aria-describedby="reminderFrequencyInput"
-                                        name='reminders'
-                                        value={this.state.formData.reminders}
+                                        name='reminderNum'
+                                        value={this.state.formData.reminderNum}
+                                        placeholder='Required for text reminders'
                                     ></input>
                                 </div>
                             </div>

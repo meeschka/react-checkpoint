@@ -3,8 +3,8 @@ const Schema = mongoose.Schema
 
 const phonereminderSchema = new Schema({
     datetime: Number,
-    phoneNum: Number,
+    phoneNum: String,
     checkpoint: {type: Schema.Types.ObjectId, ref: 'Checkpoint'},
 })
 
-module.exports = mongoose.model('phonereminders', phonereminderSchema)
+module.exports = mongoose.model('PhoneReminder', phonereminderSchema, 'phone_reminders')

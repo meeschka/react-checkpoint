@@ -1,6 +1,6 @@
 const User = require('../models/user')
 const Checkpoint = require('../models/checkpoint')
-const EmailReminder = require('../models/emailreminder')
+const PhoneReminder = require('../models/phonereminder')
 
 async function challengeResult(req, res) {
     try {
@@ -21,18 +21,24 @@ async function challengeResult(req, res) {
 async function create(req, res) {
     try {
         const checkpoint = await Checkpoint.create(req.body)
-        //get array of dates for reminders
-        if(req.body.reminderType === 'Email') {
+        //get array of dates for reminders, then create those reminder objects
+        if(req.body.reminderType === 'Text') {
+            console.log('yep, text')
+            console.log(req.body.reminderNum)
             const startDate = new Date(req.body.startDate).getTime()
             const endDate = new Date(req.body.endDate).getTime()
             let time = startDate;
             while (time < endDate){
                 time += 1000*60*60*24*7
-                await EmailReminder.create({
-                    datetime: time,
-                    email: req.user.email,
-                    checkpoint: checkpoint._id
-                })
+                if (req.body.reminderNum) {
+                    console.log(checkpoint._id)
+                    await PhoneReminder.create({
+                        datetime: time,
+                        phoneNum: req.body.reminderNum,
+                        checkpoint: checkpoint._id
+                    })
+                    .then(res=> console.log(res))
+                } 
             }
         }
         res.status(201).json(checkpoint)
@@ -46,7 +52,7 @@ async function deleteCheckpoint(req, res) {
     try {
         const deletedCheckpoint = await Checkpoint.findByIdAndDelete(req.params.id)
         //delete any reminders associated with that checkpoint
-        await EmailReminder.deleteMany({ checkpoint: req.params.id, function (err) {
+        await PhoneReminder.deleteMany({ checkpoint: req.params.id, function (err) {
             res.status(400).json({message: 'err'})
         } })
         res.status(200).json(deletedCheckpoint)

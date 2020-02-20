@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import dataService from '../../utils/dataService'
-import EmailJS from '../EmailJS/EmailJS'
 import CategoryOverview from '../CategoryOverview/CategoryOverview'
 import './CheckpointView.css'
 
@@ -54,9 +53,9 @@ class CheckpointView extends Component{
     }
 
     render() {
-        const reminderStr = 'None'
-        if (this.props.checkpoint.reminderType && this.props.checkpoint.reminderType !== 'None'){
-            reminderStr = `Every ${this.props.checkpoint.reminders} days by ${this.props.checkpoint.reminderType}`
+        let reminderStr = 'None'
+        if (this.props.checkpoint.reminderType === 'Text'){
+            reminderStr = `Send text reminders to ${this.props.checkpoint.reminderNum}`
         }
         
         return (
@@ -91,7 +90,6 @@ class CheckpointView extends Component{
                 </Modal.Footer>
             </Modal>
             <DailyProgressForm refreshCheckpoints={this.props.refreshCheckpoints} updateModal={this.state.updateModal} toggleUpdateModal={this.toggleUpdateModal} checkpoint={this.props.checkpoint} getScores={this.getScores} />
-            <EmailJS />
             </div>
         )
     }
