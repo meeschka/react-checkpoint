@@ -76,6 +76,7 @@ function addProgress(checkpointId, progressData, progressDate) {
     })
 }
 
+//routes for challenge updates
 function addChallengeResult(data){
     return fetch(`${BASE_URL}/${data.checkpointId}/challenge`, {
         method: 'POST',

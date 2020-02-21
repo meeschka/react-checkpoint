@@ -40,15 +40,11 @@ class CategoryOverview extends Component {
 
                         </div>
                         <hr />
-                        {this.props.calendarData.length > 0 ? 
+                        {this.props.calendarData.length > 0 && this.props.calendarData[idx] ? 
                             <CalendarGraph checkpoint={this.props.checkpoint} data={this.props.calendarData[idx]} avgScore={this.props.avgScores[idx] || 0} />
                             :
                             <NoScores />
                         }
-                        
-                        {/* <div>
-                            <i class="far fa-star"></i>
-                        </div> */}
                     </div>
                 )
 

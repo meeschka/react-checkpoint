@@ -84,7 +84,7 @@ class CheckpointView extends Component{
                 </div>
                 {this.state.radarData.length > 0 ? <RadarGraph radarData={this.state.radarData} /> : ''}
                 <div className='category-view-container' >
-                    <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} avgScores={this.state.avgScores} />
+                    <CategoryOverview categories={this.props.checkpoint.categories} checkpoint={this.props.checkpoint} calendarData={this.state.calendarData} avgScores={this.state.avgScores} refreshCheckpoints={this.props.refreshCheckpoints} />
                 </div>
                 <div className='checkpoint-view-btns'>
                     <button className='btn btn-success' onClick={this.toggleUpdateModal}>Add Daily Progress</button>

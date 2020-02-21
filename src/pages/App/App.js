@@ -35,11 +35,13 @@ class App extends Component {
 
   refreshCheckpoints = async () => {
     let currentCheckpoint = this.state.currentCheckpoint
+    console.log(`current checkpoint before refresh: ${currentCheckpoint}`)
     const checkpoints = await checkpointAPI.getAll()
     if (checkpoints.length >= currentCheckpoint) currentCheckpoint = 0
     if (checkpoints.length > 0) {
       this.setState({ checkpoints: checkpoints, currentCheckpoint: currentCheckpoint || 0})
     } else (this.setState({checkpoints: checkpoints, currentCheckpoint: ''}))
+    console.log(`current checkpoint before refresh: ${this.state.currentCheckpoint}`)
   }
 
   navigateToCheckpoint = async (e) => {
