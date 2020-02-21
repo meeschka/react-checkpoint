@@ -226,9 +226,37 @@ class CheckpointForm extends Component {
         }
     }
 
+    validCategories = () => {
+        let valid = true
+        this.state.formData.categories.forEach(category => { 
+            if (category.categoryName.length <1) {
+            valid = false
+        } })
+        return (valid)
+    }
+    
+    validGoalsAndChallenges = () => {
+        let valid = true
+        this.state.formData.categories.forEach(category => { 
+            //check challenges
+            category.challenges.forEach(challenge => {
+                if (challenge.challenge.length < 1 || challenge.num.length < 1 ) {
+                    valid = false
+                }
+            })
+            //check goals
+            category.goals.forEach(goal => {
+                if (goal.goal.length < 1) {
+                    valid = false
+                }
+            })
+        }) 
+        return (valid)
+    }
+
     isFormInvalid = () => {
         let phoneNum = this.state.formData.reminderType === 'Text' ? this.processNumbers() : true
-        return !(this.state.formData.name && this.state.formData.startDate && this.state.formData.endDate && this.state.formData.categories[0].categoryName && phoneNum);
+        return !(this.state.formData.name && this.state.formData.startDate && this.state.formData.endDate && this.validCategories() && this.validGoalsAndChallenges() && phoneNum);
     }
     //only allow logged in users to access form, submit form, etc.
 
