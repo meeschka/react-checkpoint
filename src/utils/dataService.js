@@ -12,11 +12,12 @@ function getAverages(checkpoint) {
             tempArr.push(checkpoint.categories[i].scores[j].score)
         }
         let categoryAvg = (tempArr.reduce((a,b) => a + b, 0)) / tempArr.length || 0
+        categoryAvg = Math.floor(categoryAvg * 10) / 10
         results.categoryAvg.push(categoryAvg)
         totalAvgArr.push(categoryAvg)
     }
     results.totalAvg = (totalAvgArr.reduce((a, b) => a + b, 0) / totalAvgArr.length) || 0
-    results.totalAvg = Math.floor(results.totalAvg * 10)/10
+    results.totalAvg = Math.floor(results.totalAvg * 10) / 10
     return results
 }
 

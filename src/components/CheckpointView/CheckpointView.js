@@ -33,14 +33,12 @@ class CheckpointView extends Component{
         let results = await dataService.getAverages(this.props.checkpoint)
         let calendarData = await dataService.processDataForCalendars(this.props.checkpoint)
         let radarData = await dataService.processDataForRadar(this.props.checkpoint)
-        console.log(radarData)
         this.setState({
             avgScore: results.totalAvg,
             avgScores: results.categoryAvg,
             calendarData: calendarData,
             radarData: [radarData]
         })
-        console.log(this.state)
     }
 
     toggleDeleteModal = () => {

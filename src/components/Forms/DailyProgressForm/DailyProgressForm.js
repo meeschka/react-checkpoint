@@ -56,37 +56,39 @@ class DailyProgressForm extends Component {
     }
 
     render() {
-        const content = this.state.dailyProgress.map((progress, idx) => (
-            <div key={`progress-${idx}`}>
-                <div className="form-group d-flex justify-content-between" key={`progress-score-${idx}`}>
-                    <label htmlFor={`score-${idx}`}>Score for {this.props.checkpoint.categories[idx].categoryName}</label>
-                    <StarRatings
-                        rating={parseInt(this.state.dailyProgress[idx].score)}
-                        starRatedColor="#005731"
-                        starHoverColor='#005731'
-                        changeRating={this.changeStars}
-                        numberOfStars={5}
-                        name={`${idx}`}
-                        className='form-control score'
-                    />
+        let content = ''
+        if (this.state.dailyProgress.length > 0){
+            content = this.props.checkpoint.categories.map((progress, idx) => (
+                <div key={`progress-${idx}`}>
+                    <div className="form-group d-flex justify-content-between" key={`progress-score-${idx}`}>
+                        <label htmlFor={`score-${idx}`}>Score for {this.props.checkpoint.categories[idx].categoryName}</label>
+                        <StarRatings
+                            rating={parseInt(this.state.dailyProgress[idx].score)}
+                            starRatedColor="#005731"
+                            starHoverColor='#005731'
+                            changeRating={this.changeStars}
+                            numberOfStars={5}
+                            name={`${idx}`}
+                            className='form-control score'
+                        />
+                    </div>
+                    <div className="form-group" key={`progress-notes-${idx}`}>
+                        <label htmlFor={`notes-${idx}`}>Notes for {this.props.checkpoint.categories[idx].categoryName}</label>
+                        <input
+                            type='Text'
+                            className='form-control notes'
+                            id={`notes-${idx}`}
+                            data-id={idx}
+                            aria-describedby='cateogryNotes'
+                            placeholder="Anything notable about today's progress?"
+                            name={`notes-${idx}`}
+                            value={this.state.dailyProgress[idx].notes} />
+                    </div>
                 </div>
-                <div className="form-group" key={`progress-notes-${idx}`}>
-                    <label htmlFor={`notes-${idx}`}>Notes for {this.props.checkpoint.categories[idx].categoryName}</label>
-                    <input
-                        type='Text'
-                        className='form-control notes'
-                        id={`notes-${idx}`}
-                        data-id={idx}
-                        aria-describedby='cateogryNotes'
-                        placeholder="Anything notable about today's progress?"
-                        name={`notes-${idx}`}
-                        value={this.state.dailyProgress[idx].notes} />
-                </div>
-            </div>
-            
-        ))
+            ))
+        }
+        
         return (
-
             <Modal show={this.props.updateModal} onHide={this.props.toggleUpdateModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Daily Progress</Modal.Title>
