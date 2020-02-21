@@ -13,6 +13,10 @@ class DailyProgressForm extends Component {
         }
     }
     componentDidMount() {
+        this.refreshForm()
+    }
+
+    refreshForm() {
         let progress = []
         let today = new Date().toISOString().slice(0,10)
         for(let i=0; i<this.props.checkpoint.categories.length; i++){
@@ -47,10 +51,7 @@ class DailyProgressForm extends Component {
         e.preventDefault()
         await checkpoint.addProgress(this.props.checkpoint._id, this.state.dailyProgress, this.state.date)
         this.props.toggleUpdateModal()
-        this.setState({
-            dailyProgress: [],
-            date: ''
-        })
+        this.refreshForm()
         await this.props.refreshCheckpoints()
         await this.props.getScores()
     }
