@@ -66,7 +66,7 @@ class CheckpointView extends Component{
 
     render() {
         let reminderStr = 'None'
-        if (this.props.checkpoint.reminderType === 'Text'){
+        if (this.props.checkpoint && this.props.checkpoint.reminderType === 'Text'){
             reminderStr = `Send text reminders to ${this.formatPhoneNum(this.props.checkpoint.reminderNum)}`
         }
         return (

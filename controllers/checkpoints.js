@@ -50,6 +50,7 @@ async function create(req, res) {
 
 async function deleteCheckpoint(req, res) {
     try {
+        console.log('in cntroller')
         const deletedCheckpoint = await Checkpoint.findByIdAndDelete(req.params.id)
         //delete any reminders associated with that checkpoint
         await PhoneReminder.deleteMany({ checkpoint: req.params.id, function (err) {

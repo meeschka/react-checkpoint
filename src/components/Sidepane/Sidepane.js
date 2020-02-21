@@ -18,6 +18,7 @@ const Sidepane = (props) => {
                 data-id={idx}
             >{checkpoint.name}</h3>
         ))
+        options.reverse()
     }
 
     return (

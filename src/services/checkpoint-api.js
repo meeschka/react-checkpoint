@@ -21,7 +21,10 @@ function create(checkpoint) {
 
 function deleteCheckpoint(checkpointId) {
     return fetch(`${BASE_URL}/${checkpointId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer '+ tokenService.getToken()
+        }
     }).then(res => {
         if (res.ok) return res.json()
         throw new Error('Checkpoint could not be deleted')
